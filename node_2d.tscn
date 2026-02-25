@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bjadt85bypcbv" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tilemap/tilemap_packed.png" id="1_wtcfe"]
 [ext_resource type="Script" uid="uid://c43nuqm7g7cp6" path="res://player.gd" id="2_epypp"]
 [ext_resource type="Texture2D" uid="uid://b513xasshjiqh" path="res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0001.png" id="3_epypp"]
+[ext_resource type="Texture2D" uid="uid://dpp8ix6yrhktu" path="res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png" id="4_0hol4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e48y"]
 texture = ExtResource("1_wtcfe")
@@ -449,6 +450,45 @@ sources/0 = SubResource("TileSetAtlasSource_0e48y")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(24, 24)
 
+[sub_resource type="Animation" id="Animation_q6r6c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody2D/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_epypp")]
+}
+
+[sub_resource type="Animation" id="Animation_kdubu"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 2
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody2D/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.39999998),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_epypp"), ExtResource("4_0hol4"), ExtResource("3_epypp")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d21ai"]
+_data = {
+&"RESET": SubResource("Animation_q6r6c"),
+&"walk": SubResource("Animation_kdubu")
+}
+
 [node name="Node2D" type="Node2D" unique_id=323521580]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1479327327]
@@ -470,3 +510,6 @@ shape = SubResource("RectangleShape2D_0e48y")
 
 [node name="Camera2D" type="Camera2D" parent="RigidBody2D" unique_id=1109641674]
 zoom = Vector2(2.5, 2.5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1224600064]
+libraries/ = SubResource("AnimationLibrary_d21ai")
