@@ -7,8 +7,15 @@ var input = Vector2()
 @export var speed := 200
 @export var accel := 1200.0
 @export var friction := 1400.0
+@onready var ground = $"../Main"
 var wep = Vector2()
 var input_dir
+var z = 0
+
+func get_tile_data():
+	var tile = ground.local_to_map(global_position)
+	var data: TileData = ground.get_cell_tile_data(tile)
+	return data
 
 func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
@@ -26,6 +33,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
+	var tileda = get_tile_data()
+	if tileda: 
+		print(tileda.get_custom_data("Stair"))
 	if input_dir.x < 0:
 		sprite.scale.x = -1
 	elif input_dir.x > 0:
