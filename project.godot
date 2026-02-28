@@ -23,6 +23,11 @@ mouse_cursor/custom_image="uid://c0ug84npaxetd"
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
+[global_group]
+
+0=""
+1=""
+
 [input]
 
 Up={
