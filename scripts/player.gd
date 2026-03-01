@@ -14,17 +14,6 @@ var wep = Vector2()
 var input_dir
 var z = 0
 
-func layer_no():
-	var data
-	var laye
-	for layer in layers:
-		data = get_tile_data(layer)
-		if data:
-			laye = layer
-			break
-	return laye
-	
-
 func get_tile_data(layer:TileMapLayer):
 	var tile = layer.local_to_map(global_position)
 	var data: TileData = layer.get_cell_tile_data(tile)
@@ -34,7 +23,6 @@ func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
 
 func _ready() -> void:
-	layers = [$"../Main", $"../Layer 1 Plateus"]
 	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0035.png"))
 
 func _physics_process(delta: float) -> void:
@@ -47,14 +35,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	var tileda = get_tile_data(ground)
-	var layer = layer_no()
-	int(layer.get_groups()[0])
-	if tileda:
-		if tileda.get_custom_data("Stair") and !on_stair:
-			on_stair = true
-		elif !tileda.get_custom_data("Stair"):
-			on_stair = false
 	if input_dir.x < 0:
 		sprite.scale.x = -1
 	elif input_dir.x > 0:
