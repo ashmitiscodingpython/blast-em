@@ -8,13 +8,16 @@ var input = Vector2()
 @export var accel := 1200.0
 @export var friction := 1400.0
 @onready var ground = $"../Main"
-@onready var layers = [$"../Main", $"../Layer 1", $"../Layer 2"]
+@onready var layers: Array[TileMapLayer] = [$"../Main", $"../Layer 1", $"../Layer 2"]
 var on_stair = false
 var wep = Vector2()
 var input_dir
 var z = 0
 var last_tile
 var current_layer: TileMapLayer
+var behind = false
+var col = false
+var full = PackedVector2Array()
 
 func turn_off_collision(from):
 	var i = 0
@@ -45,20 +48,20 @@ func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
 
 func _ready() -> void:
+	full = (layers[0].tile_set.get_source(0) as TileSetAtlasSource).get_tile_data(Vector2i(1, 3), 0).get_collision_polygon_points(0, 0)
 	reset_collision()
 	turn_off_collision(z + 1)
 	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0035.png"))
 
 func _physics_process(delta: float) -> void:
 	var layer_data = layer_no(true)
-	@warning_ignore("unused_variable")
 	var az = layer_data[0]
 	var data: TileData = layer_data[1]
 	if data != last_tile and on_stair:
 		reset_collision()
 		turn_off_collision(az + 1)
 		z = az
-	if data.get_custom_data("Stair"):
+	if data.get_custom_data("Stair") and !behind:
 		on_stair = true
 	else:
 		on_stair = false
@@ -71,7 +74,20 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	move_and_slide()
 	last_tile = data
-	print(z)
+	if layer_data[0] > z:
+		behind = true
+	else:
+		behind = false
+	var tiles: TileSetSource = layers[layer_data[0]].tile_set.get_source(0) as TileSetAtlasSource
+	var tile = tiles.get_tile_data(Vector2i(9, 2), 0)
+	if behind and !col:
+		col = true
+		tile.add_collision_polygon(0)
+		tile.set_collision_polygon_points(0, 0, full)
+	elif col:
+		col = false
+		tile.remove_collision_polygon(0, 0)
+		
 
 func _process(_delta: float) -> void:
 	if input_dir.x < 0:
