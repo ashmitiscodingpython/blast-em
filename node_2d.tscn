@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dpp8ix6yrhktu" path="res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png" id="4_0hol4"]
 [ext_resource type="Texture2D" uid="uid://c3yoh6s3dfmud" path="res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0002.png" id="5_q6r6c"]
 [ext_resource type="Script" uid="uid://bc4igcr0uxh6" path="res://scripts/camera.gd" id="6_kdubu"]
-[ext_resource type="Texture2D" uid="uid://dtunvt48wy1wr" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0225.png" id="7_d21ai"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -101,6 +100,9 @@ z_index = 2
 position = Vector2(337, 181)
 scale = Vector2(0.785, 0.785)
 script = ExtResource("2_epypp")
+speed = null
+accel = null
+friction = null
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=806553634]
 texture_filter = 1
@@ -121,13 +123,3 @@ texture_filter = 1
 position = Vector2(77, 49)
 rotation = 2.8221974
 texture = ExtResource("5_q6r6c")
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=643792077]
-position = Vector2(-54, 25)
-gravity_scale = 0.0
-constant_force = Vector2(0, 11.705)
-
-[node name="Bullet" type="Sprite2D" parent="RigidBody2D" unique_id=1546767945]
-texture_filter = 1
-position = Vector2(244, 135)
-texture = ExtResource("7_d21ai")

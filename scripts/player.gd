@@ -18,6 +18,8 @@ var current_layer: TileMapLayer
 var behind = false
 var col = false
 var full = PackedVector2Array()
+var held = false
+var cooldown = 0
 
 func turn_off_collision(from):
 	var i = 0
@@ -90,6 +92,17 @@ func _physics_process(delta: float) -> void:
 		
 
 func _process(_delta: float) -> void:
+	if cooldown > 0:
+		cooldown += _delta
+	if held and !cooldown > 0:
+		cooldown += _delta
+		var bullet = load("res://scenes/node_2d.tscn").instantiate()
+		bullet.position = $weapon.global_position
+		bullet.rotation = $weapon.rotation + deg_to_rad(90)
+		bullet.speed = 5
+		get_tree().current_scene.add_child(bullet)
+	if cooldown > 0.1:
+		cooldown = 0
 	if input_dir.x < 0:
 		sprite.scale.x = -1
 	elif input_dir.x > 0:
@@ -108,3 +121,10 @@ func _process(_delta: float) -> void:
 		wep = Vector2(11, 0)
 	weapon.position += (wep - weapon.position) / 5
 	weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed:
+			held = true
+		else:
+			held = false
