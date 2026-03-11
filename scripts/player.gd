@@ -20,6 +20,7 @@ var col = false
 var full = PackedVector2Array()
 var held = false
 var cooldown = 0
+var laye = 0
 
 func turn_off_collision(from):
 	var i = 0
@@ -28,6 +29,17 @@ func turn_off_collision(from):
 			layer.collision_enabled = false
 			layer.z_index = 4
 		i += 1
+
+func alpha(from):
+	var i = 0
+	for layer in layers:
+		if i >= from:
+			layer.modulate = Color(1.0, 1.0, 1.0, 0.5)
+		i += 1
+
+func nalpha():
+	for layer in layers:
+		layer.modulate = Color(1, 1, 1)
 
 func reset_collision():
 	for layer in layers:
@@ -89,7 +101,12 @@ func _physics_process(delta: float) -> void:
 	elif col:
 		col = false
 		tile.remove_collision_polygon(0, 0)
-		
+	if behind:
+		laye = layer_data[0]
+		alpha(z + 1)
+	else:
+		nalpha()
+		laye = 15
 
 func _process(_delta: float) -> void:
 	if cooldown > 0:
@@ -100,6 +117,7 @@ func _process(_delta: float) -> void:
 		bullet.position = $weapon.global_position
 		bullet.rotation = $weapon.rotation + deg_to_rad(90)
 		bullet.speed = 5
+		bullet.z_index = laye
 		get_tree().current_scene.add_child(bullet)
 	if cooldown > 0.1:
 		cooldown = 0

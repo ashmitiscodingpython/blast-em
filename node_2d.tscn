@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dpp8ix6yrhktu" path="res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png" id="4_0hol4"]
 [ext_resource type="Texture2D" uid="uid://c3yoh6s3dfmud" path="res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0002.png" id="5_q6r6c"]
 [ext_resource type="Script" uid="uid://bc4igcr0uxh6" path="res://scripts/camera.gd" id="6_kdubu"]
+[ext_resource type="Texture2D" uid="uid://cogy7bcpse7j0" path="res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0000.png" id="7_rj586"]
+[ext_resource type="Script" uid="uid://6jktbsls5rss" path="res://scripts/enemy.gd" id="8_rj586"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -61,6 +63,9 @@ _data = {
 &"walk": SubResource("Animation_kdubu")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rj586"]
+size = Vector2(21, 14)
+
 [node name="Node2D" type="Node2D" unique_id=323521580]
 
 [node name="Main" type="TileMapLayer" parent="." unique_id=1479327327]
@@ -100,9 +105,6 @@ z_index = 2
 position = Vector2(337, 181)
 scale = Vector2(0.785, 0.785)
 script = ExtResource("2_epypp")
-speed = null
-accel = null
-friction = null
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=806553634]
 texture_filter = 1
@@ -123,3 +125,29 @@ texture_filter = 1
 position = Vector2(77, 49)
 rotation = 2.8221974
 texture = ExtResource("5_q6r6c")
+
+[node name="Slug" type="CharacterBody2D" parent="." unique_id=1824401228]
+position = Vector2(143, 140)
+wall_min_slide_angle = 0.0
+script = ExtResource("8_rj586")
+
+[node name="Enemy" type="Sprite2D" parent="Slug" unique_id=997031503]
+texture_filter = 1
+texture = ExtResource("7_rj586")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slug" unique_id=1605348542]
+position = Vector2(0.5, 5)
+shape = SubResource("RectangleShape2D_rj586")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Slug" unique_id=185385446]
+
+[node name="Timer" type="Timer" parent="Slug" unique_id=1651365967]
+wait_time = 0.131
+autostart = true
+
+[node name="Timer2" type="Timer" parent="Slug" unique_id=675851543]
+wait_time = 0.451
+autostart = true
+
+[connection signal="timeout" from="Slug/Timer" to="Slug" method="_on_timer_timeout"]
+[connection signal="timeout" from="Slug/Timer2" to="Slug" method="move"]
