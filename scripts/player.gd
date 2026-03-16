@@ -21,6 +21,7 @@ var full = PackedVector2Array()
 var held = false
 var cooldown = 0
 var laye = 0
+var stair_tile
 
 func turn_off_collision(from):
 	var i = 0
@@ -62,12 +63,23 @@ func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
 
 func _ready() -> void:
+	var tiles: TileSetSource = ground.tile_set.get_source(0) as TileSetAtlasSource
+	stair_tile = tiles.get_tile_data(Vector2i(9, 2), 0)
 	full = (layers[0].tile_set.get_source(0) as TileSetAtlasSource).get_tile_data(Vector2i(1, 3), 0).get_collision_polygon_points(0, 0)
 	reset_collision()
 	turn_off_collision(z + 1)
 	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0035.png"))
 
 func _physics_process(delta: float) -> void:
+	input_dir = Input.get_vector("Left", "Right", "Up", "Down")
+	var target_vel = input_dir * speed
+	if input_dir != Vector2.ZERO:
+		velocity = velocity.move_toward(target_vel, accel * delta)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+	move_and_slide()
+
+func _process(_delta: float) -> void:
 	var layer_data = layer_no(true)
 	var az = layer_data[0]
 	var data: TileData = layer_data[1]
@@ -80,35 +92,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		on_stair = false
 	current_layer = layers[z]
-	input_dir = Input.get_vector("Left", "Right", "Up", "Down")
-	var target_vel = input_dir * speed
-	if input_dir != Vector2.ZERO:
-		velocity = velocity.move_toward(target_vel, accel * delta)
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-	move_and_slide()
-	last_tile = data
-	if layer_data[0] > z:
-		behind = true
-	else:
-		behind = false
-	var tiles: TileSetSource = layers[layer_data[0]].tile_set.get_source(0) as TileSetAtlasSource
-	var tile = tiles.get_tile_data(Vector2i(9, 2), 0)
-	if behind and !col:
-		col = true
-		tile.add_collision_polygon(0)
-		tile.set_collision_polygon_points(0, 0, full)
-	elif col:
-		col = false
-		tile.remove_collision_polygon(0, 0)
-	if behind:
-		laye = layer_data[0]
-		alpha(z + 1)
-	else:
-		nalpha()
-		laye = 15
-
-func _process(_delta: float) -> void:
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
@@ -139,6 +122,25 @@ func _process(_delta: float) -> void:
 		wep = Vector2(11, 0)
 	weapon.position += (wep - weapon.position) / 5
 	weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
+	
+	last_tile = data
+	if layer_data[0] > z:
+		behind = true
+	else:
+		behind = false
+	if behind and !col:
+		col = true
+		stair_tile.add_collision_polygon(0)
+		stair_tile.set_collision_polygon_points(0, 0, full)
+	elif !behind and col:
+		col = false
+		stair_tile.remove_collision_polygon(0, 0)
+	if behind:
+		laye = layer_data[0]
+		alpha(z + 1)
+	else:
+		nalpha()
+		laye = 15
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

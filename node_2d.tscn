@@ -102,7 +102,7 @@ script = ExtResource("6_kdubu")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1381324909]
 z_index = 2
-position = Vector2(337, 181)
+position = Vector2(535, 318)
 scale = Vector2(0.785, 0.785)
 script = ExtResource("2_epypp")
 
@@ -126,7 +126,7 @@ position = Vector2(77, 49)
 rotation = 2.8221974
 texture = ExtResource("5_q6r6c")
 
-[node name="Slug" type="CharacterBody2D" parent="." unique_id=1824401228]
+[node name="Slug" type="CharacterBody2D" parent="." unique_id=1824401228 groups=["Enemy"]]
 position = Vector2(143, 140)
 wall_min_slide_angle = 0.0
 script = ExtResource("8_rj586")
@@ -135,7 +135,7 @@ script = ExtResource("8_rj586")
 texture_filter = 1
 texture = ExtResource("7_rj586")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Slug" unique_id=1605348542]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slug" unique_id=1605348542 groups=["Enemy"]]
 position = Vector2(0.5, 5)
 shape = SubResource("RectangleShape2D_rj586")
 

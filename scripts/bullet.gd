@@ -10,3 +10,8 @@ func _process(_delta: float) -> void:
 	time += _delta
 	if time > 8:
 		queue_free()
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Enemy"):
+		body.hurt.emit()
+		queue_free()
