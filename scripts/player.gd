@@ -95,6 +95,7 @@ func _process(_delta: float) -> void:
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
+		$"../BulletSound".playing = true
 		cooldown += _delta
 		var bullet = load("res://scenes/node_2d.tscn").instantiate()
 		bullet.position = $weapon.global_position
