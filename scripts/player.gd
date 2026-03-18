@@ -22,6 +22,7 @@ var held = false
 var cooldown = 0
 var laye = 0
 var stair_tile
+var coins = 0
 
 func turn_off_collision(from):
 	var i = 0

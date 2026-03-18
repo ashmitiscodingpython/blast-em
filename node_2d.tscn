@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://bc4igcr0uxh6" path="res://scripts/camera.gd" id="6_kdubu"]
 [ext_resource type="Script" uid="uid://bj0i6v01pf84i" path="res://scripts/enemy_spawner.gd" id="8_rj586"]
 [ext_resource type="AudioStream" uid="uid://vgph3nnsk6g1" path="res://sounds/blast.wav" id="9_4d7sh"]
+[ext_resource type="Texture2D" uid="uid://cufr80hf6e56v" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0124.png" id="9_ir8iy"]
+[ext_resource type="Script" uid="uid://dx0xo2ug1ws4f" path="res://scripts/star.gd" id="10_ir8iy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -64,6 +66,7 @@ _data = {
 }
 
 [node name="Node2D" type="Node2D" unique_id=323521580]
+metadata/_edit_vertical_guides_ = [-1.0]
 
 [node name="Main" type="TileMapLayer" parent="." unique_id=1479327327]
 texture_filter = 1
@@ -125,5 +128,19 @@ stream = ExtResource("9_4d7sh")
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
+
+[node name="Star" type="Sprite2D" parent="." unique_id=418182766]
+texture_filter = 1
+position = Vector2(445, 535)
+texture = ExtResource("9_ir8iy")
+script = ExtResource("10_ir8iy")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=349691785]
+
+[node name="Star Display" type="Sprite2D" parent="CanvasLayer" unique_id=502118455]
+texture_filter = 1
+position = Vector2(67, 67)
+scale = Vector2(5.135, 5.135)
+texture = ExtResource("9_ir8iy")
 
 [connection signal="death" from="EnemySpawner" to="EnemySpawner" method="on_death"]
