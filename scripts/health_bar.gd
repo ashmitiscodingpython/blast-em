@@ -2,8 +2,8 @@ extends Node2D
 
 @export var health = 0
 @onready var middleses = []
-var enemish = false
-var length = 2
+@export var length = 8
+@export var enemish = false
 var start_pos
 var cursor
 var middle
@@ -28,27 +28,14 @@ func _ready() -> void:
 	middle.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child.call_deferred(middle)
 	for i in range(length):
-		#var middle = Sprite2D.new()
-		#middle.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0158.png")
-		#middle.name = "Middle " + str(i + 1)
-		#middle.position = Vector2(cursor, 0)
-		#middle.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		#add_child.call_deferred(middle)
-		#middleses.append(middle)
 		new_filler(cursor, i + 2)
 		cursor += 16
 	if enemish:
 		$Start.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0139.png")
-		#for middle in middleses:
-		#	middle.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0140.png")
 		$End.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0142.png")
+		middle.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0140.png")
 
 func _process(_delta: float) -> void:
 	$End.position.x = remap(health, 0, 100, start_pos + 4, -start_pos + 32)
 	middle.scale.x = remap(health, 0, 100, 0, length)
 	middle.position.x = ($End.position.x + $Start.position.x) / 2
-	#for middle in middleses:
-	#	if $End.position.x > middle.position.x + 2:
-	#		middle.visible = true
-	#	else:
-	#		middle.visible = false

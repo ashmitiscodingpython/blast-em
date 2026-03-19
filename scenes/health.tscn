@@ -6,7 +6,9 @@
 
 [node name="Health Bar" type="Node2D" unique_id=2085607430]
 script = ExtResource("1_hcdjo")
-health = 10
+health = 98
+length = 2
+enemish = true
 
 [node name="Start" type="Sprite2D" parent="." unique_id=94434022]
 texture_filter = 1
