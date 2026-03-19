@@ -72,16 +72,20 @@ func dmg():
 		if !healthed:
 			healthed = true
 			bar = load("res://scenes/health.tscn").instantiate()
+			bar.enemish = true
 			add_child(bar)
 			bar.scale = Vector2(0.5, 0.5)
 		match type:
-			"Slug": bar.health -= 2
+			"Slug": bar.health -= 3
 			"Bear": bar.health -= 0.5
 			"Bat": bar.health -= 4
 			"Sock": bar.health -= 3
 		if bar.health <= 0 and !dead:
 			$"../EnemySpawner".death.emit()
 			$CollisionShape2D.queue_free()
+			var star = load("res://scenes/star.tscn").instantiate()
+			star.global_position = global_position
+			get_tree().current_scene.add_child(star)
 			dead = true
 			bar.queue_free()
 			match type:

@@ -2,70 +2,20 @@
 
 [ext_resource type="Script" uid="uid://cpu7v7df7e3fa" path="res://scripts/health_bar.gd" id="1_hcdjo"]
 [ext_resource type="Texture2D" uid="uid://ds1f3jyvnapst" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0157.png" id="2_p278q"]
-[ext_resource type="Texture2D" uid="uid://cjd1t74c521cn" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0158.png" id="3_ukqru"]
 [ext_resource type="Texture2D" uid="uid://nwlwdnpntilw" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0160.png" id="4_iv062"]
-[ext_resource type="Texture2D" uid="uid://dcm6l2oqyq72w" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0124.png" id="5_g178y"]
-[ext_resource type="Texture2D" uid="uid://bwtfpln7jp8xw" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0122.png" id="6_04xbm"]
-[ext_resource type="Texture2D" uid="uid://b4x8l0dh7qght" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0121.png" id="7_iv062"]
-[ext_resource type="Texture2D" uid="uid://c8eww1kiv4y1b" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0161.png" id="8_g178y"]
 
 [node name="Health Bar" type="Node2D" unique_id=2085607430]
 script = ExtResource("1_hcdjo")
-health = 51
+health = 10
 
 [node name="Start" type="Sprite2D" parent="." unique_id=94434022]
 texture_filter = 1
 position = Vector2(-24, 0)
 texture = ExtResource("2_p278q")
 
-[node name="Middle 1" type="Sprite2D" parent="." unique_id=1265135358]
-visible = false
-texture_filter = 1
-position = Vector2(-8, 0)
-texture = ExtResource("3_ukqru")
-
-[node name="Middle 2" type="Sprite2D" parent="." unique_id=938423293]
-visible = false
-texture_filter = 1
-position = Vector2(8, 0)
-texture = ExtResource("3_ukqru")
-
 [node name="End" type="Sprite2D" parent="." unique_id=966615187]
 texture_filter = 1
-position = Vector2(-29.845, 0)
+position = Vector2(24, 0)
 texture = ExtResource("4_iv062")
 
 [node name="Filler" type="Node2D" parent="." unique_id=383240953]
-
-[node name="Filler 4" type="Sprite2D" parent="Filler" unique_id=345424312]
-texture_filter = 1
-position = Vector2(24, 0)
-texture = ExtResource("5_g178y")
-
-[node name="Filler 3" type="Sprite2D" parent="Filler" unique_id=1153045997]
-texture_filter = 1
-position = Vector2(8, 0)
-texture = ExtResource("6_04xbm")
-
-[node name="Filler 2" type="Sprite2D" parent="Filler" unique_id=544875237]
-texture_filter = 1
-position = Vector2(-8, 0)
-texture = ExtResource("6_04xbm")
-
-[node name="Filler 1" type="Sprite2D" parent="Filler" unique_id=985792792]
-texture_filter = 1
-position = Vector2(-21.62, 0)
-texture = ExtResource("6_04xbm")
-
-[node name="Tile0121" type="Sprite2D" parent="." unique_id=306179027]
-visible = false
-z_index = 2
-texture_filter = 1
-position = Vector2(-24, 0)
-texture = ExtResource("7_iv062")
-
-[node name="Tile0161" type="Sprite2D" parent="." unique_id=1656412129]
-visible = false
-texture_filter = 1
-position = Vector2(-27, 0)
-texture = ExtResource("8_g178y")

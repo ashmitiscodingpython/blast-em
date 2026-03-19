@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b4njq0edd4c5f"]
+
+[ext_resource type="Texture2D" uid="uid://cufr80hf6e56v" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0124.png" id="1_j6vao"]
+[ext_resource type="Script" uid="uid://dx0xo2ug1ws4f" path="res://scripts/star.gd" id="2_ef0hr"]
+
+[node name="Star" type="Sprite2D" unique_id=93051047]
+texture_filter = 1
+texture = ExtResource("1_j6vao")
+script = ExtResource("2_ef0hr")

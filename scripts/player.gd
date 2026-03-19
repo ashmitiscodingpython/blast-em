@@ -7,6 +7,7 @@ var input = Vector2()
 @export var speed := 200
 @export var accel := 1200.0
 @export var friction := 1400.0
+@export var new: String
 @onready var ground = $"../Main"
 @onready var layers: Array[TileMapLayer] = [$"../Main", $"../Layer 1", $"../Layer 2"]
 var on_stair = false
