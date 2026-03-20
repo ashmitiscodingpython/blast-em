@@ -1,23 +1,48 @@
 [gd_scene format=3 uid="uid://b1i78p4e4a6cp"]
 
 [ext_resource type="Script" uid="uid://cpu7v7df7e3fa" path="res://scripts/health_bar.gd" id="1_hcdjo"]
-[ext_resource type="Texture2D" uid="uid://ds1f3jyvnapst" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0157.png" id="2_p278q"]
-[ext_resource type="Texture2D" uid="uid://nwlwdnpntilw" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0160.png" id="4_iv062"]
+[ext_resource type="Texture2D" uid="uid://c8eww1kiv4y1b" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0161.png" id="3_hcdjo"]
+[ext_resource type="Texture2D" uid="uid://cjd1t74c521cn" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0158.png" id="4_p278q"]
+[ext_resource type="Shader" uid="uid://cnw2gm0rdp7hk" path="res://shaders/crop.gdshader" id="6_p278q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p278q"]
+shader = ExtResource("6_p278q")
+shader_parameter/lower_limit = Vector2(0, 0)
+shader_parameter/upper_limit = Vector2(9, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ukqru"]
+shader = ExtResource("6_p278q")
+shader_parameter/lower_limit = Vector2(8, 0)
+shader_parameter/upper_limit = Vector2(16, 16)
 
 [node name="Health Bar" type="Node2D" unique_id=2085607430]
 script = ExtResource("1_hcdjo")
-health = 98
-length = 2
-enemish = true
+health = 100
+length = 3
 
-[node name="Start" type="Sprite2D" parent="." unique_id=94434022]
-texture_filter = 1
+[node name="Start" type="Node2D" parent="." unique_id=454296492]
 position = Vector2(-24, 0)
-texture = ExtResource("2_p278q")
 
-[node name="End" type="Sprite2D" parent="." unique_id=966615187]
+[node name="Short Start" type="Sprite2D" parent="Start" unique_id=94434022]
 texture_filter = 1
-position = Vector2(24, 0)
-texture = ExtResource("4_iv062")
+material = SubResource("ShaderMaterial_p278q")
+position = Vector2(-3, 0)
+texture = ExtResource("3_hcdjo")
+
+[node name="Start Elongation" type="Sprite2D" parent="Start" unique_id=1335696511]
+texture_filter = 1
+position = Vector2(-3, 0)
+scale = Vector2(3.38, 1)
+texture = ExtResource("4_p278q")
+offset = Vector2(8, 0)
+
+[node name="End" type="Node2D" parent="." unique_id=1713946156]
+position = Vector2(31, 0)
+
+[node name="Short End" type="Sprite2D" parent="End" unique_id=336550489]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ukqru")
+position = Vector2(-4, 0)
+texture = ExtResource("3_hcdjo")
 
 [node name="Filler" type="Node2D" parent="." unique_id=383240953]

@@ -24,6 +24,8 @@ var cooldown = 0
 var laye = 0
 var stair_tile
 var coins = 0
+var bar = load("res://scenes/health.tscn").instantiate()
+var health = 100
 
 func turn_off_collision(from):
 	var i = 0
@@ -65,6 +67,10 @@ func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
 
 func _ready() -> void:
+	bar.position = Vector2(0, 20)
+	bar.scale = Vector2(0.5, 0.5)
+	bar.length = 2
+	add_child.call_deferred(bar)
 	var tiles: TileSetSource = ground.tile_set.get_source(0) as TileSetAtlasSource
 	stair_tile = tiles.get_tile_data(Vector2i(9, 2), 0)
 	full = (layers[0].tile_set.get_source(0) as TileSetAtlasSource).get_tile_data(Vector2i(1, 3), 0).get_collision_polygon_points(0, 0)
@@ -85,6 +91,7 @@ func _process(_delta: float) -> void:
 	var layer_data = layer_no(true)
 	var az = layer_data[0]
 	var data: TileData = layer_data[1]
+	bar.health = health
 	if data != last_tile and on_stair:
 		reset_collision()
 		turn_off_collision(az + 1)
@@ -97,7 +104,7 @@ func _process(_delta: float) -> void:
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
-		$"../BulletSound".playing = true
+		$"BulletSound".playing = true
 		cooldown += _delta
 		var bullet = load("res://scenes/node_2d.tscn").instantiate()
 		bullet.position = $weapon.global_position

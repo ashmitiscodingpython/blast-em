@@ -73,10 +73,11 @@ func dmg():
 			healthed = true
 			bar = load("res://scenes/health.tscn").instantiate()
 			bar.enemish = true
+			bar.health = 100
 			add_child(bar)
 			bar.scale = Vector2(0.5, 0.5)
 		match type:
-			"Slug": bar.health -= 3
+			"Slug": bar.health -= 10
 			"Bear": bar.health -= 0.5
 			"Bat": bar.health -= 4
 			"Sock": bar.health -= 3

@@ -1,5 +1,21 @@
 extends Node2D
 
+@export var constant := false
+@export var text_position: Vector2
+@export var text_: String
+@export var align_ := "left"
+@export var scale_: float
+
+@export_group("Continuous Types")
+@export var coins = false
+@export var round_announcer = false
+
+@warning_ignore("unused_signal")
+signal round
+var rounding = false
+var repeats = 200
+var cursize = 32
+
 const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 @onready var mapping = [
@@ -58,7 +74,26 @@ func write(text: String, coords: Vector2, align: String, scaled: float):
 		now.x += 16 * (scaled / 1.5)
 
 func _ready() -> void:
-	pass
+	if constant:
+		write(text_, text_position, align_, scale_)
 
 func _process(_delta: float) -> void:
-	write(str($"../../Player".coins), Vector2(50, -25), "left", 3)
+	if !constant:
+		if coins:
+			write(str($"../../Player".coins), Vector2(50, -25), "left", 3)
+		if round_announcer:
+			if rounding and repeats > 0:
+				repeats -= 1
+				print(repeats)
+				write("round " + str($"../../EnemySpawner".round_number), text_position, align_, cursize)
+				cursize += (4.0 - cursize) / 5
+			if repeats == 0:
+				for child in get_children():
+					child.queue_free()
+				rounding = false
+				$"../../EnemySpawner".spawn_now.emit()
+
+func roundup():
+	repeats = 200
+	cursize = 32
+	rounding = true
