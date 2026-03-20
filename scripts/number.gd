@@ -13,8 +13,10 @@ extends Node2D
 @warning_ignore("unused_signal")
 signal round
 var rounding = false
-var repeats = 200
+var repeats = 100
+var ghost_repeats = 50
 var cursize = 32
+var ghostrn = 1
 
 const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -84,16 +86,22 @@ func _process(_delta: float) -> void:
 		if round_announcer:
 			if rounding and repeats > 0:
 				repeats -= 1
-				print(repeats)
 				write("round " + str($"../../EnemySpawner".round_number), text_position, align_, cursize)
 				cursize += (4.0 - cursize) / 5
 			if repeats == 0:
-				for child in get_children():
-					child.queue_free()
-				rounding = false
-				$"../../EnemySpawner".spawn_now.emit()
+				if ghost_repeats > 0:
+					ghostrn += (0 - ghostrn) / 3.0
+					modulate = Color(1, 1, 1, ghostrn)
+					ghost_repeats -= 1
+				if ghost_repeats == 0:
+					for child in get_children():
+						child.queue_free()
+					rounding = false
+					$"../../EnemySpawner".spawn_now.emit()
 
 func roundup():
-	repeats = 200
+	repeats = 100
+	ghost_repeats = 50
 	cursize = 32
+	ghostrn = 1
 	rounding = true
