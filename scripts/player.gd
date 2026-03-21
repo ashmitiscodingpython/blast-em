@@ -7,7 +7,6 @@ var input = Vector2()
 @export var speed := 200
 @export var accel := 1200.0
 @export var friction := 1400.0
-@export var new: String
 @onready var ground = $"../Main"
 @onready var layers: Array[TileMapLayer] = [$"../Main", $"../Layer 1", $"../Layer 2"]
 var on_stair = false
@@ -26,6 +25,8 @@ var stair_tile
 var coins = 0
 var bar = load("res://scenes/health.tscn").instantiate()
 var health = 100
+var upordown = 0
+var assigned = false
 
 func turn_off_collision(from):
 	var i = 0
@@ -79,6 +80,23 @@ func _ready() -> void:
 	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0035.png"))
 
 func _physics_process(delta: float) -> void:
+	var layer_data = layer_no(true)
+	var az = layer_data[0]
+	var data: TileData = layer_data[1]
+	if data.get_custom_data("Stair"):
+		on_stair = true
+		if !assigned:
+			assigned = true
+			upordown = velocity.y / abs(velocity.y)
+	else:
+		on_stair = false
+		assigned = false
+	if on_stair:
+		z = int(az - clamp(upordown, -1, 0))
+		print(z)
+		reset_collision()
+		turn_off_collision(z + 1)
+	
 	input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 	var target_vel = input_dir * speed
 	if input_dir != Vector2.ZERO:
@@ -88,19 +106,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
-	var layer_data = layer_no(true)
-	var az = layer_data[0]
-	var data: TileData = layer_data[1]
 	bar.health = health
-	if data != last_tile and on_stair:
-		reset_collision()
-		turn_off_collision(az + 1)
-		z = az
-	if data.get_custom_data("Stair") and !behind:
-		on_stair = true
-	else:
-		on_stair = false
-	current_layer = layers[z]
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
@@ -132,25 +138,6 @@ func _process(_delta: float) -> void:
 		wep = Vector2(11, 0)
 	weapon.position += (wep - weapon.position) / 5
 	weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
-	
-	last_tile = data
-	if layer_data[0] > z:
-		behind = true
-	else:
-		behind = false
-	if behind and !col:
-		col = true
-		stair_tile.add_collision_polygon(0)
-		stair_tile.set_collision_polygon_points(0, 0, full)
-	elif !behind and col:
-		col = false
-		stair_tile.remove_collision_polygon(0, 0)
-	if behind:
-		laye = layer_data[0]
-		alpha(z + 1)
-	else:
-		nalpha()
-		laye = 15
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

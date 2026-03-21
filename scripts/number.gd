@@ -12,11 +12,19 @@ extends Node2D
 
 @warning_ignore("unused_signal")
 signal round
+@warning_ignore("unused_signal")
+signal round_end
 var rounding = false
 var repeats = 100
 var ghost_repeats = 50
 var cursize = 32
 var ghostrn = 1
+var roundenreps = 0
+var roundengh = 0
+var rounden = false
+var rnscale = 32
+var ghreps = 0
+var once = false
 
 const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -85,6 +93,7 @@ func _process(_delta: float) -> void:
 			write(str($"../../Player".coins), Vector2(50, -25), "left", 3)
 		if round_announcer:
 			if rounding and repeats > 0:
+				modulate = Color(1, 1, 1, 1)
 				repeats -= 1
 				write("round " + str($"../../EnemySpawner".round_number), text_position, align_, cursize)
 				cursize += (4.0 - cursize) / 5
@@ -94,10 +103,26 @@ func _process(_delta: float) -> void:
 					modulate = Color(1, 1, 1, ghostrn)
 					ghost_repeats -= 1
 				if ghost_repeats == 0:
+					ghost_repeats = -1
 					for child in get_children():
 						child.queue_free()
 					rounding = false
+					modulate = Color(1, 1, 1, 1)
 					$"../../EnemySpawner".spawn_now.emit()
+			if rounden:
+				if roundenreps > 0:
+					roundenreps -= 1
+					write("ROUND OVER", text_position, align_, rnscale)
+					rnscale += (4 - rnscale) / 5.0
+				if roundenreps == 0 and ghreps > 0:
+					ghreps -= 1
+					modulate = Color(1, 1, 1, roundengh)
+					roundengh += (0 - roundengh) / 3.0
+				if ghreps == 0 and !once:
+					once = true
+					for child in get_children():
+						child.queue_free()
+					modulate = Color(1, 1, 1, 1)
 
 func roundup():
 	repeats = 100
@@ -105,3 +130,11 @@ func roundup():
 	cursize = 32
 	ghostrn = 1
 	rounding = true
+
+func round_en():
+	once = false
+	ghreps = 50
+	roundenreps = 100
+	roundengh = 1
+	rnscale = 32
+	rounden = true
