@@ -93,9 +93,16 @@ func _physics_process(delta: float) -> void:
 		assigned = false
 	if on_stair:
 		z = int(az - clamp(upordown, -1, 0))
-		print(z)
 		reset_collision()
 		turn_off_collision(z + 1)
+	behind = true if (az != z and !on_stair) else false
+	if behind and !col:
+		col = true
+		stair_tile.add_collision_polygon(0)
+		stair_tile.set_collision_polygon_points(0, 0, full)
+	elif !behind and col:
+		col = false
+		stair_tile.remove_collision_polygon(0, 0)
 	
 	input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 	var target_vel = input_dir * speed
