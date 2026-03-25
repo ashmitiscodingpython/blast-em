@@ -28,6 +28,7 @@ var bar = load("res://scenes/health.tscn").instantiate()
 var health = 100
 var upordown = 0
 var assigned = false
+var tick = false
 
 func turn_off_collision(from):
 	var i = 0
@@ -108,6 +109,7 @@ func _process(_delta: float) -> void:
 	var layer_data = layer_no(true)
 	var az = layer_data[0]
 	var data: TileData = layer_data[1]
+	behind = true if (az != z and !on_stair) else false
 	if data.get_custom_data("Stair"):
 		on_stair = true
 		if !assigned:
@@ -116,12 +118,18 @@ func _process(_delta: float) -> void:
 	else:
 		on_stair = false
 		assigned = false
-	behind = true if (az != z and !on_stair) else false
-	print(az, " ", z)
-	if on_stair and !behind:
-		z = int(az - clamp(upordown, -1, 0))
+	behind = true if (az != z and !on_stair and !z > az) else false
+	tick = false
+	if z > az and !on_stair:
+		z = az
+		tick = true
+	var stair_req = on_stair and !behind and !z < az
+	if stair_req or tick:
+		if !tick:
+			z = int(az - clamp(upordown, -1, 0))
 		reset_collision()
 		turn_off_collision(z + 1)
+	print(z, " ", az)
 	if behind and !col:
 		col = true
 		nalpha()
@@ -129,9 +137,10 @@ func _process(_delta: float) -> void:
 		rescol()
 		colfrom(z + 1)
 	elif !behind and col:
-		col = false
-		rescol()
-		nalpha()
+		if !(on_stair and !stair_req):
+			col = false
+			rescol()
+			nalpha()
 	
 	bar.health = health
 	if cooldown > 0:

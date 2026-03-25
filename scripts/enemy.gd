@@ -89,6 +89,7 @@ func dmg():
 			get_tree().current_scene.add_child(star)
 			dead = true
 			bar.queue_free()
+			$Death.emitting = true
 			match type:
 				"Slug": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0003.png")
 				"Bat": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0007.png")
