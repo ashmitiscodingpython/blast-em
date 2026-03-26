@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name playerscript
 
 var input = Vector2()
 @onready var sprite = $Sprite2D
@@ -25,10 +26,12 @@ var laye = 0
 var stair_tile
 var coins = 0
 var bar = load("res://scenes/health.tscn").instantiate()
-var health = 100
+var health = 500
 var upordown = 0
 var assigned = false
 var tick = false
+var enemies_on = []
+signal damage
 
 func turn_off_collision(from):
 	var i = 0
@@ -129,7 +132,6 @@ func _process(_delta: float) -> void:
 			z = int(az - clamp(upordown, -1, 0))
 		reset_collision()
 		turn_off_collision(z + 1)
-	print(z, " ", az)
 	if behind and !col:
 		col = true
 		nalpha()
@@ -142,7 +144,7 @@ func _process(_delta: float) -> void:
 			rescol()
 			nalpha()
 	
-	bar.health = health
+	bar.health = health / 5.0
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
@@ -181,3 +183,15 @@ func _input(event: InputEvent) -> void:
 			held = true
 		else:
 			held = false
+
+func _area_entered(body) -> void:
+	if body.get_groups().find("Enemy") > -1:
+		enemies_on.append(body)
+
+func _area_exited(body) -> void:
+	if body.get_groups().find("Enemy") > -1 and body in enemies_on:
+		enemies_on.remove_at(enemies_on.find(body))
+
+func hurt():
+	if len(enemies_on) > 0:
+		damage.emit()

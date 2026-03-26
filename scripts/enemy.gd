@@ -4,6 +4,7 @@ const speed = 25
 @export var type = "Slug"
 @onready var target = $"../Player"
 @onready var nav = $NavigationAgent2D
+@onready var player_: playerscript
 var triggerts = 0
 var time = 0
 signal hurt
@@ -15,7 +16,11 @@ var dmg_timer = 0
 var dmg_ = false
 
 func _ready() -> void:
+	player_ = get_tree().get_first_node_in_group("Player")
 	hurt.connect(dmg)
+	player_.damage.connect(player_dmg)
+	if type == "Bat":
+		$CollisionShape2D.queue_free()
 
 func _physics_process(_delta: float) -> void:
 	if !dead:
@@ -96,4 +101,14 @@ func dmg():
 				"Sock": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0011.png")
 				"Bear": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0015.png")
 		velocity = -2 * velocity
-	
+
+func player_dmg():
+	if $"." in player_.enemies_on:
+		for child in player_.get_children():
+			if child.name == "HurtSound":
+				child.playing = true
+		match type:
+			"Slug": player_.health -= 3
+			"Bat": player_.health -= 2
+			"Sock": player_.health -= 1
+			"Bear": player_.health -= 4

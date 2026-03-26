@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dpp8ix6yrhktu" path="res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png" id="4_0hol4"]
 [ext_resource type="Texture2D" uid="uid://c3yoh6s3dfmud" path="res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0002.png" id="5_q6r6c"]
 [ext_resource type="Script" uid="uid://bc4igcr0uxh6" path="res://scripts/camera.gd" id="6_kdubu"]
+[ext_resource type="AudioStream" uid="uid://tb2njkl0k01" path="res://kenney_desert-shooter-pack_1.0/Sounds/hurt-c.ogg" id="8_0h7mo"]
 [ext_resource type="Script" uid="uid://bj0i6v01pf84i" path="res://scripts/enemy_spawner.gd" id="8_rj586"]
 [ext_resource type="AudioStream" uid="uid://vgph3nnsk6g1" path="res://sounds/blast.wav" id="9_4d7sh"]
 [ext_resource type="Texture2D" uid="uid://cufr80hf6e56v" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0124.png" id="9_ir8iy"]
@@ -67,6 +68,9 @@ _data = {
 &"walk": SubResource("Animation_kdubu")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ka3"]
+size = Vector2(33.121017, 33.121044)
+
 [node name="Node2D" type="Node2D" unique_id=323521580]
 metadata/_edit_vertical_guides_ = [-1.0]
 
@@ -118,7 +122,7 @@ position = Vector2(577, 330)
 zoom = Vector2(2.5, 2.5)
 script = ExtResource("6_kdubu")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1381324909]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1381324909 groups=["Player"]]
 z_index = 2
 position = Vector2(577.00006, 330.00003)
 scale = Vector2(0.785, 0.785)
@@ -148,6 +152,21 @@ texture_filter = 1
 position = Vector2(77, 49)
 rotation = 2.8221974
 texture = ExtResource("5_q6r6c")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="Player" unique_id=1527927636]
+scale = Vector2(0.99999994, 0.99999994)
+stream = ExtResource("8_0h7mo")
+
+[node name="Area2D" type="Area2D" parent="Player" unique_id=653665130]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D" unique_id=426528168]
+position = Vector2(1, 3.232)
+shape = SubResource("RectangleShape2D_x0ka3")
+debug_color = Color(0.8980392, 0.2, 0.60784316, 0.3254902)
+
+[node name="PlayerHurtTimer" type="Timer" parent="Player" unique_id=731729928]
+wait_time = 0.538
+autostart = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
@@ -191,6 +210,9 @@ align_ = "center"
 scale_ = 4.0
 round_announcer = true
 
+[connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
+[connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]
+[connection signal="timeout" from="Player/PlayerHurtTimer" to="Player" method="hurt"]
 [connection signal="death" from="EnemySpawner" to="EnemySpawner" method="on_death"]
 [connection signal="spawn_now" from="EnemySpawner" to="EnemySpawner" method="_spawn"]
 [connection signal="round" from="CanvasLayer/Round Announcer" to="CanvasLayer/Round Announcer" method="roundup"]

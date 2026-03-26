@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var player = $"../Player"
+@onready var player_ = $"../Player"
 @export var disabled = false
 var difficulty = 1
 var round_number = 1
@@ -81,12 +81,12 @@ func _process(delta: float) -> void:
 func spawn_enemy():
 	var enemy = load("res://scenes/enemy.tscn").instantiate()
 	var rand_dir = randf_range(deg_to_rad(0), deg_to_rad(360))
-	var value = Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))
+	var value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))
 	value = Vector2(
 		clamp(value.x, 28, 1135),
 		clamp(value.y, 91, 641)
 	)
-	enemy.position = player.position + value
+	enemy.global_position = value
 	enemy.type = ["Slug", "Bat", "Sock", "Bear"][randi_range(0, round(difficulty) - 1)]
 	get_tree().current_scene.add_child(enemy)
 	cooldown_left = enemy_cooldown
