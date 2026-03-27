@@ -20,7 +20,8 @@ func _ready() -> void:
 	hurt.connect(dmg)
 	player_.damage.connect(player_dmg)
 	if type == "Bat":
-		$CollisionShape2D.queue_free()
+		collision_layer = 8388608
+		collision_mask = 2
 
 func _physics_process(_delta: float) -> void:
 	if !dead:
@@ -45,6 +46,10 @@ func on_move() -> void:
 		move()
 	
 func _process(_delta: float) -> void:
+	if player_.position.x > position.x:
+		$Enemy.scale.x = 1
+	else:
+		$Enemy.scale.x = -1
 	if !dead:
 		if bar:
 			bar.global_position = global_position - Vector2(0, 5)
@@ -89,9 +94,10 @@ func dmg():
 		if bar.health <= 0 and !dead:
 			$"../EnemySpawner".death.emit()
 			$CollisionShape2D.queue_free()
-			var star = load("res://scenes/star.tscn").instantiate()
-			star.global_position = global_position
-			get_tree().current_scene.add_child(star)
+			if randi_range(0, 100) > 25:
+				var star = load("res://scenes/star.tscn").instantiate()
+				star.global_position = global_position
+				get_tree().current_scene.add_child(star)
 			dead = true
 			bar.queue_free()
 			$Death.emitting = true
