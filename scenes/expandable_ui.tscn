@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://yny22p4qhhor"]
+
+[ext_resource type="Script" uid="uid://bnjkuyrrj2itd" path="res://scripts/expandable_ui.gd" id="1_i1ign"]
+[ext_resource type="Texture2D" uid="uid://b0gws63rrimka" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0045.png" id="2_mw4l4"]
+[ext_resource type="Texture2D" uid="uid://bu061022klj28" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0047.png" id="3_ktwmf"]
+[ext_resource type="Texture2D" uid="uid://gy1nqbduavi" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0009.png" id="4_ye4dp"]
+[ext_resource type="Texture2D" uid="uid://dy41y5epmhbsm" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0011.png" id="5_vdmc0"]
+[ext_resource type="Texture2D" uid="uid://d3lmsw8n86tko" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0028.png" id="6_8nom0"]
+[ext_resource type="Texture2D" uid="uid://brmphjqr8npmh" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0029.png" id="7_82wxd"]
+[ext_resource type="Texture2D" uid="uid://b1suqvdaiv514" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0027.png" id="8_wpfvh"]
+[ext_resource type="Texture2D" uid="uid://duyx5a00wfc5l" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0046.png" id="9_meykm"]
+[ext_resource type="Texture2D" uid="uid://b3sp2ytndt3me" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0010.png" id="10_saefi"]
+
+[node name="Expandable UI" type="Node2D" unique_id=846319715]
+script = ExtResource("1_i1ign")
+size = Vector2(228, 64)
+
+[node name="Bottom Left" type="Sprite2D" parent="." unique_id=1754260753]
+texture_filter = 1
+position = Vector2(-16, 16)
+texture = ExtResource("2_mw4l4")
+
+[node name="Bottom Right" type="Sprite2D" parent="." unique_id=803784141]
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("3_ktwmf")
+
+[node name="Top Left" type="Sprite2D" parent="." unique_id=702149224]
+texture_filter = 1
+position = Vector2(-16, -16)
+texture = ExtResource("4_ye4dp")
+
+[node name="Top Right" type="Sprite2D" parent="." unique_id=1453192638]
+texture_filter = 1
+position = Vector2(16, -16)
+texture = ExtResource("5_vdmc0")
+
+[node name="Center" type="TextureRect" parent="." unique_id=1491811208]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_8nom0")
+
+[node name="Right Edge" type="TextureRect" parent="." unique_id=953271975]
+texture_filter = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -8.0
+offset_right = 24.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(16, 8)
+texture = ExtResource("7_82wxd")
+stretch_mode = 1
+
+[node name="Left Edge" type="TextureRect" parent="." unique_id=1750981378]
+texture_filter = 1
+offset_left = -24.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = 8.0
+texture = ExtResource("8_wpfvh")
+stretch_mode = 1
+
+[node name="Bottom Edge" type="TextureRect" parent="." unique_id=1182632986]
+texture_filter = 1
+offset_left = -8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 24.0
+texture = ExtResource("9_meykm")
+stretch_mode = 1
+
+[node name="Top Edge" type="TextureRect" parent="." unique_id=260676800]
+texture_filter = 1
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 8.0
+offset_bottom = -8.0
+texture = ExtResource("10_saefi")
+stretch_mode = 1
