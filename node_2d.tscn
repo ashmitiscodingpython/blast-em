@@ -77,9 +77,10 @@ size = Vector2(33.121017, 33.121044)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k73cj"]
 shader = ExtResource("16_ta5nu")
-shader_parameter/focus_position = Vector2(576, 324)
-shader_parameter/focus_size = 0.0
-shader_parameter/focus_color = Color(0, 0, 0, 1)
+shader_parameter/radius = 0.23
+shader_parameter/color = Color(0.9471994, 0.9471994, 0.9471994, 1)
+shader_parameter/background = Color(0, 0, 0, 0)
+shader_parameter/position = Vector2(1075, 571)
 
 [node name="Node2D" type="Node2D" unique_id=323521580]
 metadata/_edit_vertical_guides_ = [-1.0]
