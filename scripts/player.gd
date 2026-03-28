@@ -32,6 +32,7 @@ var assigned = false
 var tick = false
 var enemies_on = []
 signal damage
+var ui = 0
 
 func turn_off_collision(from):
 	var i = 0
@@ -179,7 +180,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.pressed:
+		if event.pressed and !(ui > 0):
 			held = true
 		else:
 			held = false

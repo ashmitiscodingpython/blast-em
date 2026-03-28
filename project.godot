@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/stretch/aspect="expand"
 mouse_cursor/custom_image="uid://c0ug84npaxetd"
 
 [editor_plugins]

@@ -10,29 +10,35 @@
 [ext_resource type="Texture2D" uid="uid://b1suqvdaiv514" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0027.png" id="8_wpfvh"]
 [ext_resource type="Texture2D" uid="uid://duyx5a00wfc5l" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0046.png" id="9_meykm"]
 [ext_resource type="Texture2D" uid="uid://b3sp2ytndt3me" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0010.png" id="10_saefi"]
+[ext_resource type="Texture2D" uid="uid://c6ayoqtu4u3lm" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0073.png" id="11_mw4l4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mw4l4"]
+size = Vector2(16, 16)
 
 [node name="Expandable UI" type="Node2D" unique_id=846319715]
+position = Vector2(576, 324)
 script = ExtResource("1_i1ign")
 size = Vector2(228, 64)
+open = true
 
 [node name="Bottom Left" type="Sprite2D" parent="." unique_id=1754260753]
 texture_filter = 1
-position = Vector2(-16, 16)
+position = Vector2(-130, 48)
 texture = ExtResource("2_mw4l4")
 
 [node name="Bottom Right" type="Sprite2D" parent="." unique_id=803784141]
 texture_filter = 1
-position = Vector2(16, 16)
+position = Vector2(130, 48)
 texture = ExtResource("3_ktwmf")
 
 [node name="Top Left" type="Sprite2D" parent="." unique_id=702149224]
 texture_filter = 1
-position = Vector2(-16, -16)
+position = Vector2(-130, -48)
 texture = ExtResource("4_ye4dp")
 
 [node name="Top Right" type="Sprite2D" parent="." unique_id=1453192638]
 texture_filter = 1
-position = Vector2(16, -16)
+position = Vector2(130, -48)
 texture = ExtResource("5_vdmc0")
 
 [node name="Center" type="TextureRect" parent="." unique_id=1491811208]
@@ -41,10 +47,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = -123.0
+offset_top = -41.0
+offset_right = 123.0
+offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(8, 8)
@@ -59,10 +65,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 8.0
-offset_top = -8.0
-offset_right = 24.0
-offset_bottom = 8.0
+offset_left = 122.0
+offset_top = -40.0
+offset_right = 138.0
+offset_bottom = 40.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(16, 8)
@@ -71,27 +77,41 @@ stretch_mode = 1
 
 [node name="Left Edge" type="TextureRect" parent="." unique_id=1750981378]
 texture_filter = 1
-offset_left = -24.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = 8.0
+offset_left = -138.0
+offset_top = -40.0
+offset_right = -122.0
+offset_bottom = 40.0
 texture = ExtResource("8_wpfvh")
 stretch_mode = 1
 
 [node name="Bottom Edge" type="TextureRect" parent="." unique_id=1182632986]
 texture_filter = 1
-offset_left = -8.0
-offset_top = 8.0
-offset_right = 8.0
-offset_bottom = 24.0
+offset_left = -122.0
+offset_top = 40.0
+offset_right = 122.0
+offset_bottom = 56.0
 texture = ExtResource("9_meykm")
 stretch_mode = 1
 
 [node name="Top Edge" type="TextureRect" parent="." unique_id=260676800]
 texture_filter = 1
-offset_left = -8.0
-offset_top = -24.0
-offset_right = 8.0
-offset_bottom = -8.0
+offset_left = -122.0
+offset_top = -56.0
+offset_right = 122.0
+offset_bottom = -40.0
 texture = ExtResource("10_saefi")
 stretch_mode = 1
+
+[node name="Close" type="Area2D" parent="." unique_id=1822441044]
+position = Vector2(123, -41)
+
+[node name="Sprite" type="Sprite2D" parent="Close" unique_id=1346696884]
+texture_filter = 1
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("11_mw4l4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Close" unique_id=70891484]
+shape = SubResource("RectangleShape2D_mw4l4")
+
+[connection signal="mouse_entered" from="Close" to="." method="_mouse"]
+[connection signal="mouse_exited" from="Close" to="." method="_mouse_left"]

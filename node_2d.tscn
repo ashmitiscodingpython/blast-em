@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://8tyjpjfgqu04" path="res://scripts/number.gd" id="11_hqns4"]
 [ext_resource type="PackedScene" uid="uid://b1i78p4e4a6cp" path="res://scenes/health.tscn" id="12_x0ka3"]
 [ext_resource type="PackedScene" uid="uid://yny22p4qhhor" path="res://scenes/expandable_ui.tscn" id="14_nr8wp"]
+[ext_resource type="Texture2D" uid="uid://dcna3pkrawvjd" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0078.png" id="15_d2bti"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -169,6 +170,7 @@ autostart = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
+disabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=349691785]
 
@@ -209,9 +211,16 @@ align_ = "center"
 scale_ = 4.0
 round_announcer = true
 
-[node name="Expandable UI" parent="." unique_id=846319715 instance=ExtResource("14_nr8wp")]
-position = Vector2(32, -9)
-process = false
+[node name="Upgrade Menu" parent="CanvasLayer" unique_id=846319715 instance=ExtResource("14_nr8wp")]
+position = Vector2(576, 324)
+scale = Vector2(2, 2)
+
+[node name="Upgrade Button" type="Sprite2D" parent="CanvasLayer" unique_id=778529130]
+self_modulate = Color(0.71368307, 1, 0.6952554, 1)
+texture_filter = 1
+position = Vector2(1075, 571)
+scale = Vector2(3.97, 3.97)
+texture = ExtResource("15_d2bti")
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
 [connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]
