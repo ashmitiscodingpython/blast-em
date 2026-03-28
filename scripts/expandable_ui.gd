@@ -23,6 +23,10 @@ func _process(_delta: float) -> void:
 	else:
 		position += (closed_position - position) / 5
 	if process:
+		if mouse:
+			$Close/Sprite.scale += (Vector2(1.2, 1.2) - $Close/Sprite.scale) / 5
+		else:
+			$Close/Sprite.scale += (Vector2(0.85, 0.85) - $Close/Sprite.scale) / 5
 		$Center.size.x = size.x + 18
 		$Center.size.y = size.y + 18
 		$Center.position = Vector2(

@@ -48,6 +48,7 @@ func _process(delta: float) -> void:
 			round_over = true
 			$"../CanvasLayer/Round Announcer".round_end.emit()
 			$"../CanvasLayer/Cooldown Bar".visible = true
+			$"../CanvasLayer/Upgrade Menu".open = true
 			round_cooldown_left = round_cooldown
 		
 		# Under round cooldown
