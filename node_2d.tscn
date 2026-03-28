@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dcna3pkrawvjd" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0078.png" id="15_d2bti"]
 [ext_resource type="Shader" uid="uid://wamb2rjt4js4" path="res://shaders/focus.gdshader" id="16_ta5nu"]
 [ext_resource type="Texture2D" uid="uid://s0vtt2r002yw" path="res://images/BLANK.png" id="17_flf07"]
+[ext_resource type="Script" uid="uid://8wupfp1ubx6m" path="res://scripts/highlight.gd" id="18_k73cj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -77,8 +78,7 @@ size = Vector2(33.121017, 33.121044)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k73cj"]
 shader = ExtResource("16_ta5nu")
-shader_parameter/radius = 0.23
-shader_parameter/color = Color(0.9471994, 0.9471994, 0.9471994, 1)
+shader_parameter/color = Color(0.4575464, 0.78693616, 0.42721984, 1)
 shader_parameter/background = Color(0, 0, 0, 0)
 shader_parameter/position = Vector2(1075, 571)
 
@@ -230,10 +230,15 @@ position = Vector2(1075, 571)
 scale = Vector2(3.97, 3.97)
 texture = ExtResource("15_d2bti")
 
-[node name="Blank" type="Sprite2D" parent="CanvasLayer" unique_id=1565304812]
+[node name="Highlight" type="Sprite2D" parent="CanvasLayer" unique_id=1565304812]
 material = SubResource("ShaderMaterial_k73cj")
 position = Vector2(576, 324)
 texture = ExtResource("17_flf07")
+script = ExtResource("18_k73cj")
+highlighting = true
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Highlight" unique_id=974758668]
+one_shot = true
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
 [connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]
@@ -242,3 +247,4 @@ texture = ExtResource("17_flf07")
 [connection signal="spawn_now" from="EnemySpawner" to="EnemySpawner" method="_spawn"]
 [connection signal="round" from="CanvasLayer/Round Announcer" to="CanvasLayer/Round Announcer" method="roundup"]
 [connection signal="round_end" from="CanvasLayer/Round Announcer" to="CanvasLayer/Round Announcer" method="round_en"]
+[connection signal="timeout" from="CanvasLayer/Highlight/Timer" to="CanvasLayer/Highlight" method="callback"]

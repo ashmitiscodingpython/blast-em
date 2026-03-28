@@ -1,6 +1,8 @@
 shader_type canvas_item;
 
-uniform float radius = 0.75;
+instance uniform float radius = 0.75;
+instance uniform float override = 0;
+instance uniform bool overriding = false;
 uniform vec4 color: source_color;
 uniform vec4 background: source_color;
 uniform vec2 position;
@@ -12,5 +14,8 @@ void fragment() {
 	float aspect = size.x / size.y;
 	uv.x *= aspect;
 	float dist = length(uv);
-	COLOR = mix(color, background, dist / radius);
+	COLOR = mix(background, color, dist / radius);
+	if (overriding) {
+		COLOR *= vec4(1, 1, 1, override);
+	}
 }
