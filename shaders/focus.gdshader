@@ -14,7 +14,7 @@ void fragment() {
 	float aspect = size.x / size.y;
 	uv.x *= aspect;
 	float dist = length(uv);
-	COLOR = mix(background, color, dist / radius);
+	COLOR = mix(background, color, smoothstep(0, 1, dist / radius));
 	if (overriding) {
 		COLOR *= vec4(1, 1, 1, override);
 	}

@@ -6,8 +6,10 @@ var time = 0
 var repeats = 75
 var repeating = false
 var timer_done = false
+signal done
 
 func _ready() -> void:
+	visible = true
 	set_instance_shader_parameter("radius", 18)
 
 func _process(delta: float) -> void:
@@ -19,6 +21,7 @@ func _process(delta: float) -> void:
 			timer_done = false
 			set_instance_shader_parameter("overriding", false)
 			set_instance_shader_parameter("radius", 18)
+			done.emit()
 		else:
 			repeats -= 1
 			var gettt = get_instance_shader_parameter("override")

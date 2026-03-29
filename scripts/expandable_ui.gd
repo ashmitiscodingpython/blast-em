@@ -2,20 +2,41 @@ extends Node2D
 
 @export var size = Vector2(0, 0)
 @export var closed_position = Vector2(576, 800)
+@export var open_position: Vector2
 @export var process = true
 @export var open = false
-var open_position
+@export var button = false
+@export var text_included = false
+@export var auto_set_open_position = true
+
+@export_group("Text")
+@export var text: String
+@export var constant = true
+@export var relative_position = Vector2(0, 0)
+@export var align = "center"
+
+@export_group("Button Actions")
+@export var filler: String = "FILLING IN"
+
 var mouse = false
 var player
+var mouse_whole = false
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
 	if !open:
 		visible = false
-	open_position = position
+	if auto_set_open_position:
+		open_position = position
+	if button:
+		$Collider/CollisionShape2D.shape.size = size + Vector2(48, 48)
 
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
+	if mouse_whole and button:
+		scale += (Vector2(1.2, 1.2) - scale) / 5
+	elif button:
+		scale += (Vector2(1, 1) - scale) / 5
 	if !open and cond:
 		visible = true
 	if open and process:
@@ -55,6 +76,14 @@ func _mouse_left() -> void:
 	if mouse:
 		player.ui -= 1
 	mouse = false
+
+func mouse_on() -> void:
+	if button:
+		mouse_whole = true
+
+func mouse_off() -> void:
+	if button:
+		mouse_whole = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:

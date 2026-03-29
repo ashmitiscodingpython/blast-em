@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b1i78p4e4a6cp" path="res://scenes/health.tscn" id="12_x0ka3"]
 [ext_resource type="PackedScene" uid="uid://yny22p4qhhor" path="res://scenes/expandable_ui.tscn" id="14_nr8wp"]
 [ext_resource type="Texture2D" uid="uid://dcna3pkrawvjd" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0078.png" id="15_d2bti"]
+[ext_resource type="Script" uid="uid://vhb5bk2qts0" path="res://scripts/upgrade_button.gd" id="15_rjqkl"]
 [ext_resource type="Shader" uid="uid://wamb2rjt4js4" path="res://shaders/focus.gdshader" id="16_ta5nu"]
 [ext_resource type="Texture2D" uid="uid://s0vtt2r002yw" path="res://images/BLANK.png" id="17_flf07"]
 [ext_resource type="Script" uid="uid://8wupfp1ubx6m" path="res://scripts/highlight.gd" id="18_k73cj"]
@@ -78,7 +79,7 @@ size = Vector2(33.121017, 33.121044)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k73cj"]
 shader = ExtResource("16_ta5nu")
-shader_parameter/color = Color(0.4575464, 0.78693616, 0.42721984, 1)
+shader_parameter/color = Color(1, 1, 1, 0.5686275)
 shader_parameter/background = Color(0, 0, 0, 0)
 shader_parameter/position = Vector2(1075, 571)
 
@@ -220,22 +221,38 @@ scale_ = 4.0
 round_announcer = true
 
 [node name="Upgrade Menu" parent="CanvasLayer" unique_id=846319715 instance=ExtResource("14_nr8wp")]
+position = Vector2(572, 324)
 scale = Vector2(2, 2)
-open = false
 
-[node name="Upgrade Button" type="Sprite2D" parent="CanvasLayer" unique_id=778529130]
+[node name="Node2D" type="Node2D" parent="CanvasLayer/Upgrade Menu" unique_id=900591853]
+position = Vector2(-286, -162)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("11_hqns4")
+constant = true
+text_position = Vector2(383, 246)
+text_ = "upgrade"
+align_ = "center"
+scale_ = 1.5
+
+[node name="Area2D" type="Area2D" parent="CanvasLayer" unique_id=969905798]
+script = ExtResource("15_rjqkl")
+
+[node name="Upgrade Button" type="Sprite2D" parent="CanvasLayer/Area2D" unique_id=778529130]
+visible = false
 self_modulate = Color(0.71368307, 1, 0.6952554, 1)
 texture_filter = 1
 position = Vector2(1075, 571)
 scale = Vector2(3.97, 3.97)
 texture = ExtResource("15_d2bti")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Area2D" unique_id=1195510058]
+
 [node name="Highlight" type="Sprite2D" parent="CanvasLayer" unique_id=1565304812]
+visible = false
 material = SubResource("ShaderMaterial_k73cj")
 position = Vector2(576, 324)
 texture = ExtResource("17_flf07")
 script = ExtResource("18_k73cj")
-highlighting = true
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Highlight" unique_id=974758668]
 one_shot = true

@@ -21,6 +21,8 @@ var first_round = true
 signal death
 @warning_ignore("unused_signal")
 signal spawn_now
+var highlight = false
+var highli_done = false
 
 func _ready() -> void:
 	if !disabled:
@@ -45,10 +47,13 @@ func _process(delta: float) -> void:
 		
 		# Current round is over, turn on cooldown
 		if deaths == spawn and !round_over and !waiting:
+			if round_number == 1:
+				$"../CanvasLayer/Upgrade Button".visible = true
+				$"../CanvasLayer/Highlight".highlighting = true
+				await $"../CanvasLayer/Highlight".done
 			round_over = true
 			$"../CanvasLayer/Round Announcer".round_end.emit()
 			$"../CanvasLayer/Cooldown Bar".visible = true
-			$"../CanvasLayer/Upgrade Menu".open = true
 			round_cooldown_left = round_cooldown
 		
 		# Under round cooldown

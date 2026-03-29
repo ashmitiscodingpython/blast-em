@@ -15,8 +15,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mw4l4"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktwmf"]
+size = Vector2(276, 112)
+
 [node name="Expandable UI" type="Node2D" unique_id=846319715]
-position = Vector2(576, 324)
 script = ExtResource("1_i1ign")
 size = Vector2(228, 64)
 open = true
@@ -113,5 +115,13 @@ texture = ExtResource("11_mw4l4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Close" unique_id=70891484]
 shape = SubResource("RectangleShape2D_mw4l4")
 
+[node name="Collider" type="Area2D" parent="." unique_id=1176527281]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider" unique_id=1816591247]
+shape = SubResource("RectangleShape2D_ktwmf")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
 [connection signal="mouse_entered" from="Close" to="." method="_mouse"]
 [connection signal="mouse_exited" from="Close" to="." method="_mouse_left"]
+[connection signal="mouse_entered" from="Collider" to="." method="mouse_on"]
+[connection signal="mouse_exited" from="Collider" to="." method="mouse_off"]
