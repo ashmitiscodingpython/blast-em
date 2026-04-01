@@ -23,6 +23,7 @@ signal death
 signal spawn_now
 var highlight = false
 var highli_done = false
+var paused = false
 
 func _ready() -> void:
 	if !disabled:
@@ -48,7 +49,7 @@ func _process(delta: float) -> void:
 		# Current round is over, turn on cooldown
 		if deaths == spawn and !round_over and !waiting:
 			if round_number == 1:
-				$"../CanvasLayer/Area2D".visible = true
+				$"../CanvasLayer/Upgrade Button".visible = true
 				$"../CanvasLayer/Highlight".highlighting = true
 				await $"../CanvasLayer/Highlight".done
 			round_over = true
@@ -58,7 +59,8 @@ func _process(delta: float) -> void:
 		
 		# Under round cooldown
 		if round_over:
-			round_cooldown_left -= delta
+			if !paused:
+				round_cooldown_left -= delta
 			$"../CanvasLayer/Cooldown Bar/Health Bar".health = (round_cooldown_left / round_cooldown) * 100
 			
 		# Round cooldown over, initiate ROUND {NUMBER} announcement
@@ -88,10 +90,7 @@ func spawn_enemy():
 	var enemy = load("res://scenes/enemy.tscn").instantiate()
 	var rand_dir = randf_range(deg_to_rad(0), deg_to_rad(360))
 	var value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))
-	value = Vector2(
-		clamp(value.x, 304, 868),
-		clamp(value.y, 80, 517)
-	)
+	
 	enemy.global_position = value
 	enemy.type = ["Slug", "Bat", "Sock", "Bear"][randi_range(0, round(difficulty) - 1)]
 	get_tree().current_scene.add_child(enemy)

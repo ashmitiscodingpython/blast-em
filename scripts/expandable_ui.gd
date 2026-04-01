@@ -19,13 +19,16 @@ extends Node2D
 
 @export_group("Button Actions")
 @export var upgrade = false
+@export var done = false
 
 var mouse = false
 var player
 var mouse_whole = false
 var totalable = 0
+var orig_scale
 
 func _ready() -> void:
+	orig_scale = scale
 	player = get_tree().get_first_node_in_group("Player")
 	if text_included:
 		var texty = Node2D.new()
@@ -47,10 +50,16 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
+	if button and upgrade:
+		if player.coins < 0:
+			mouse_whole = false
+			modulate = Color(0.7, 0.7, 0.7, 1)
+		else:
+			modulate = Color(1, 1, 1, 1)
 	if mouse_whole and button:
-		scale += (Vector2(1.2, 1.2) - scale) / 5
+		scale += ((orig_scale / 0.83) - scale) / 5
 	elif button:
-		scale += (Vector2(1, 1) - scale) / 5
+		scale += ((orig_scale) - scale) / 5
 	if !open and cond:
 		visible = true
 	if open and process:
@@ -109,7 +118,11 @@ func _input(event: InputEvent) -> void:
 		if mouse:
 			open = !open
 		if mouse_whole and button and upgrade:
+			if $"../../Cooldown Bar".visible:
+				$"../../Cooldown Bar".visible = false
+				$"../../../EnemySpawner".paused = true
 			$"..".open = false
+			$"../../Selection Done".visible = true
 			$"../../Selection Visibilty Controller".visible = true
 			player.ui += 1
 			player.coins -= 1
@@ -117,3 +130,20 @@ func _input(event: InputEvent) -> void:
 				$"../../../Selection Layer".selected_total = 0
 			totalable += 25
 			$"../../../Selection Layer".selecting = true
+		if mouse_whole and button and done:
+			var selection = $"../../Selection Layer"
+			$"../Selection Visibilty Controller".visible = false
+			if $"../../EnemySpawner".paused:
+				$"../Cooldown Bar".visible = true
+				$"../../EnemySpawner".paused = false
+			player.ui -= 1
+			$"../Upgrade Menu/Upgrade Button".totalable = 0
+			visible = false
+			selection.selected_total = 0
+			selection.selecting = false
+			for pos in selection.ons:
+				if selection.ons[pos]:
+					$"../../SubViewport/revelation".erase_cell(pos)
+					$"../../Fog Collision".erase_cell(pos)
+					selection.ons[pos] = false
+			selection.update_cells()

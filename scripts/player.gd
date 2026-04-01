@@ -24,7 +24,7 @@ var held = false
 var cooldown = 0
 var laye = 0
 var stair_tile
-var coins = 0
+var coins = 10
 var bar = load("res://scenes/health.tscn").instantiate()
 var health = 500
 var upordown = 0

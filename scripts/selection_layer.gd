@@ -9,12 +9,20 @@ var selecting = false
 var selected_total = 0
 @onready var cursor = $"../Selection Cursor"
 
+func update_cells():
+	clear()
+	var tiles_to_update = []
+	for key in ons:
+		if ons[key]:
+			tiles_to_update.append(key)
+	set_cells_terrain_connect(tiles_to_update, 0, 0)
+
 func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
-	var now = Vector2i(floor(mouse_pos.x / 16), floor(mouse_pos.y / 16))
+	var now = Vector2i(floor(mouse_pos.x / 16), floor(mouse_pos.y / 16)) - Vector2i(72, 40)
 	if tile_pos != now:
 		tile_pos = now
 		appended = false
@@ -31,12 +39,7 @@ func _process(_delta: float) -> void:
 		elif get_cell_source_id(tile_pos) > -1 and erasing:
 			ons[tile_pos] = false
 			selected_total -= 1
-		clear()
-		var tiles_to_update = []
-		for key in ons:
-			if ons[key]:
-				tiles_to_update.append(key)
-		set_cells_terrain_connect(tiles_to_update, 0, 0)
+		update_cells()
 	cursor.position = ((tile_pos as Vector2) * Vector2(16, 16)) + Vector2(8, 8)
 	if $"../SubViewport/revelation".get_cell_source_id(tile_pos) > 0:
 		cursor.modulate = Color(1, 1, 1, 1)
