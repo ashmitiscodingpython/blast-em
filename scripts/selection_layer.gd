@@ -6,6 +6,7 @@ var ons = {}
 var appended = false
 var tile_pos
 var selecting = false
+@onready var cursor = $"../Selection Cursor"
 
 func _ready() -> void:
 	pass
@@ -16,6 +17,10 @@ func _process(_delta: float) -> void:
 	if tile_pos != now:
 		tile_pos = now
 		appended = false
+	if selecting:
+		cursor.visible = true
+	else:
+		cursor.visible = false
 	if held and $"../SubViewport/revelation".get_cell_source_id(tile_pos) > 0 and !appended and selecting:
 		appended = true
 		if !erasing:	
@@ -28,6 +33,11 @@ func _process(_delta: float) -> void:
 			if ons[key]:
 				tiles_to_update.append(key)
 		set_cells_terrain_connect(tiles_to_update, 0, 0)
+	cursor.position = ((tile_pos as Vector2) * Vector2(16, 16)) + Vector2(8, 8)
+	if $"../SubViewport/revelation".get_cell_source_id(tile_pos) > 0:
+		cursor.modulate = Color(1, 1, 1, 1)
+	else:
+		cursor.modulate = Color(0.5, 0.5, 0.5, 1)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

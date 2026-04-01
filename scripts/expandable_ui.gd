@@ -15,9 +15,10 @@ extends Node2D
 @export var constant = true
 @export var relative_position = Vector2(0, 0)
 @export var align = "center"
+@export var scale_ = 1.0
 
 @export_group("Button Actions")
-@export var filler: String = "FILLING IN"
+@export var upgrade = false
 
 var mouse = false
 var player
@@ -25,6 +26,15 @@ var mouse_whole = false
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
+	if text_included:
+		var texty = Node2D.new()
+		texty.set_script(load("res://scripts/number.gd"))
+		texty.constant = true
+		texty.text_position = relative_position
+		texty.align_ = align
+		texty.scale_ = scale_
+		texty.text_ = text
+		add_child.call_deferred(texty)
 	if !close_button:
 		$"Close".queue_free()
 	if !open:
@@ -44,7 +54,7 @@ func _process(_delta: float) -> void:
 		visible = true
 	if open and process:
 		position += (open_position - position) / 5
-	else:
+	elif process:
 		position += (closed_position - position) / 5
 	if process:
 		if close_button:
@@ -83,13 +93,22 @@ func _mouse_left() -> void:
 
 func mouse_on() -> void:
 	if button:
+		if not mouse_whole:
+			player.ui += 1
 		mouse_whole = true
 
 func mouse_off() -> void:
 	if button:
+		if mouse_whole:
+			player.ui -= 1
 		mouse_whole = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if mouse:
 			open = !open
+		if mouse_whole and button and upgrade:
+			$"..".open = false
+			player.ui += 1
+			player.coins -= 1
+			$"../../../Selection Layer".selecting = true

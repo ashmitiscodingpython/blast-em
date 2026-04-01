@@ -26,10 +26,10 @@ var rnscale = 32
 var ghreps = 0
 var once = false
 
-const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const letters = "+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 @onready var mapping = [
-	fro_to(93, 102, 4),
+	fro_to(91, 102, 4),
 	fro_to(108, 120, 4),
 	fro_to(126, 138, 4)
 ]

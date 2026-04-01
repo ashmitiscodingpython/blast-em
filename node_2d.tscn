@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://x4x6dri0ejdb" path="res://fog.gd" id="22_e8dv2"]
 [ext_resource type="TileSet" uid="uid://dgmrt52oocod7" path="res://fog.tres" id="23_e8dv2"]
 [ext_resource type="Script" uid="uid://3shckdkrlmi4" path="res://scripts/selection_layer.gd" id="24_2nhjh"]
+[ext_resource type="Texture2D" uid="uid://cuiovru60agu0" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0104.png" id="25_bjha6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -251,12 +252,21 @@ text_ = "upgrade arena"
 scale_ = 1.5
 
 [node name="Upgrade Button" parent="CanvasLayer/Upgrade Menu" unique_id=203115137 instance=ExtResource("14_nr8wp")]
-position = Vector2(-70, -25)
-size = Vector2(48, 16)
+size = Vector2(80, -10)
 button = true
 text_included = true
 close_button = false
-text = "UPGRADE"
+text = "UPGRADE  1"
+relative_position = Vector2(-48, 0)
+align = "left"
+scale_ = 0.8
+upgrade = true
+
+[node name="Tile0124" type="Sprite2D" parent="CanvasLayer/Upgrade Menu/Upgrade Button" unique_id=284854963 groups=["Show"]]
+texture_filter = 1
+position = Vector2(44.325, 0)
+texture = ExtResource("9_ir8iy")
+script = ExtResource("10_ir8iy")
 
 [node name="Area2D" type="Area2D" parent="CanvasLayer" unique_id=969905798]
 position = Vector2(1075, 571)
@@ -281,6 +291,36 @@ script = ExtResource("18_k73cj")
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Highlight" unique_id=974758668]
 one_shot = true
+
+[node name="Selection Indicator" parent="CanvasLayer" unique_id=1230391707 instance=ExtResource("14_nr8wp")]
+position = Vector2(573, 77)
+scale = Vector2(2, 2)
+size = Vector2(120, 14)
+open_position = Vector2(574, 77)
+close_button = false
+
+[node name="Star" type="Sprite2D" parent="CanvasLayer/Selection Indicator" unique_id=466698905 groups=["Show"]]
+texture_filter = 1
+position = Vector2(-37.662506, -9.022499)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("9_ir8iy")
+script = ExtResource("10_ir8iy")
+
+[node name="Selecting Text" type="Node2D" parent="CanvasLayer/Selection Indicator" unique_id=496015756]
+position = Vector2(-58.625, -8.9375)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("11_hqns4")
+constant = true
+text_ = "1    is 25 cells"
+scale_ = 1.5
+
+[node name="Selection Indicator" type="Node2D" parent="CanvasLayer/Selection Indicator" unique_id=697641536]
+position = Vector2(-53.2325, 10.279999)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("11_hqns4")
+constant = true
+text_ = "SELECTING AREA"
+scale_ = 1.5
 
 [node name="Fog" type="Sprite2D" parent="." unique_id=1280247946]
 material = SubResource("ShaderMaterial_e8dv2")
@@ -318,6 +358,11 @@ modulate = Color(0.4509804, 1, 0.45882353, 0.69411767)
 texture_filter = 1
 tile_set = ExtResource("23_e8dv2")
 script = ExtResource("24_2nhjh")
+
+[node name="Selection Cursor" type="Sprite2D" parent="." unique_id=1778723959]
+texture_filter = 1
+position = Vector2(406, 275)
+texture = ExtResource("25_bjha6")
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
 [connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]
