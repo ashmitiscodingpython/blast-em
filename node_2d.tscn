@@ -235,9 +235,11 @@ scale_ = 4.0
 round_announcer = true
 
 [node name="Upgrade Menu" parent="CanvasLayer" unique_id=846319715 instance=ExtResource("14_nr8wp")]
-position = Vector2(572, 324)
+position = Vector2(572, 800)
 scale = Vector2(2, 2)
+open_position = Vector2(576, 324)
 open = false
+auto_set_open_position = false
 
 [node name="Node2D" type="Node2D" parent="CanvasLayer/Upgrade Menu" unique_id=900591853]
 position = Vector2(-286, -162)
@@ -276,7 +278,7 @@ one_shot = true
 
 [node name="Fog" type="Sprite2D" parent="." unique_id=1280247946]
 material = SubResource("ShaderMaterial_e8dv2")
-position = Vector2(576, 328)
+position = Vector2(576, 324)
 scale = Vector2(2, 2)
 texture = ExtResource("17_flf07")
 script = ExtResource("22_e8dv2")
@@ -308,6 +310,7 @@ tile_set = ExtResource("23_e8dv2")
 [node name="Selection Layer" type="TileMapLayer" parent="." unique_id=1373457894]
 modulate = Color(0.4509804, 1, 0.45882353, 0.69411767)
 texture_filter = 1
+tile_map_data = PackedByteArray("AAAmAAkAAgACAAAAAAAlAAkAAgABAAAAAAAkAAkAAgAAAAAAAAAkAAoAAgAAAAEAAAAkAAsAAgAAAAIAAAAlAAsAAgABAAIAAAAmAAsAAgACAAIAAAAmAAoAAgACAAEAAAAlAAoAAgABAAEAAAA=")
 tile_set = ExtResource("23_e8dv2")
 script = ExtResource("24_2nhjh")
 
