@@ -8,6 +8,7 @@ extends Node2D
 @export var button = false
 @export var text_included = false
 @export var auto_set_open_position = true
+@export var close_button = true
 
 @export_group("Text")
 @export var text: String
@@ -24,6 +25,8 @@ var mouse_whole = false
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
+	if !close_button:
+		$"Close".queue_free()
 	if !open:
 		visible = false
 	if auto_set_open_position:
@@ -44,10 +47,11 @@ func _process(_delta: float) -> void:
 	else:
 		position += (closed_position - position) / 5
 	if process:
-		if mouse:
-			$Close/Sprite.scale += (Vector2(1.2, 1.2) - $Close/Sprite.scale) / 5
-		else:
-			$Close/Sprite.scale += (Vector2(0.85, 0.85) - $Close/Sprite.scale) / 5
+		if close_button:
+			if mouse:
+				$Close/Sprite.scale += (Vector2(1.2, 1.2) - $Close/Sprite.scale) / 5
+			else:
+				$Close/Sprite.scale += (Vector2(0.85, 0.85) - $Close/Sprite.scale) / 5
 		$Center.size.x = size.x + 18
 		$Center.size.y = size.y + 18
 		$Center.position = Vector2(

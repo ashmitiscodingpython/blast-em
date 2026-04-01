@@ -241,18 +241,24 @@ open_position = Vector2(576, 324)
 open = false
 auto_set_open_position = false
 
-[node name="Node2D" type="Node2D" parent="CanvasLayer/Upgrade Menu" unique_id=900591853]
+[node name="Upgrade Text" type="Node2D" parent="CanvasLayer/Upgrade Menu" unique_id=900591853]
 position = Vector2(-286, -162)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("11_hqns4")
 constant = true
-text_position = Vector2(383, 246)
-text_ = "upgrade"
-align_ = "center"
+text_position = Vector2(332, 246)
+text_ = "upgrade arena"
 scale_ = 1.5
 
+[node name="Upgrade Button" parent="CanvasLayer/Upgrade Menu" unique_id=203115137 instance=ExtResource("14_nr8wp")]
+position = Vector2(-70, -25)
+size = Vector2(48, 16)
+button = true
+text_included = true
+close_button = false
+text = "UPGRADE"
+
 [node name="Area2D" type="Area2D" parent="CanvasLayer" unique_id=969905798]
-visible = false
 position = Vector2(1075, 571)
 script = ExtResource("15_rjqkl")
 
@@ -310,7 +316,6 @@ tile_set = ExtResource("23_e8dv2")
 [node name="Selection Layer" type="TileMapLayer" parent="." unique_id=1373457894]
 modulate = Color(0.4509804, 1, 0.45882353, 0.69411767)
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAmAAkAAgACAAAAAAAlAAkAAgABAAAAAAAkAAkAAgAAAAAAAAAkAAoAAgAAAAEAAAAkAAsAAgAAAAIAAAAlAAsAAgABAAIAAAAmAAsAAgACAAIAAAAmAAoAAgACAAEAAAAlAAoAAgABAAEAAAA=")
 tile_set = ExtResource("23_e8dv2")
 script = ExtResource("24_2nhjh")
 
