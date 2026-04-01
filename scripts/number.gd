@@ -9,6 +9,7 @@ extends Node2D
 @export_group("Continuous Types")
 @export var coins = false
 @export var round_announcer = false
+@export var selection = false
 
 @warning_ignore("unused_signal")
 signal round
@@ -37,12 +38,12 @@ const letters = "+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 func index(letter: String):
 	letter = letter.to_upper()
 	var li = letters.find(letter) + 1
-	if li < 11:
+	if li < 13:
 		return [1, li]
-	elif li < 24:
-		return [2, li - 10]
+	elif li < 26:
+		return [2, li - 12]
 	else:
-		return [3, li - 23]
+		return [3, li - 25]
 
 func fro_to(from, to, filler):
 	var list = []
@@ -89,6 +90,17 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if !constant:
+		if selection:
+			var selected_total = $"../../Selection Layer".selected_total
+			var totalable = $"../Upgrade Menu/Upgrade Button".totalable
+			write(str(selected_total) + " " + str(totalable), text_position, align_, scale_)
+			$"../SLASH".position.x = 182.57 + (32 * (len(str(selected_total)) - 1))
+			if selected_total == totalable:
+				$"../SLASH".modulate = Color(1.0, 0.51, 0.45, 1)
+				$"../Selection Counter".modulate = Color(1.0, 0.51, 0.45, 1)
+			else:
+				$"../SLASH".modulate = Color(1, 1, 1, 1)
+				$"../Selection Counter".modulate = Color(1, 1, 1, 1)
 		if coins:
 			write(str($"../../Player".coins), Vector2(50, -25), "left", 3)
 		if round_announcer:

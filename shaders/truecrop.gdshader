@@ -1,14 +1,21 @@
 shader_type canvas_item;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+uniform vec2 lower_limit;
+uniform vec2 upper_limit = vec2(16, 16);
+varying vec2 size;
+uniform vec4 modulate: source_color;
 
 void fragment() {
-	// Called for every pixel the material is visible on.
+	size = 1.0 / TEXTURE_PIXEL_SIZE;
+	vec2 lower_limit_mod = lower_limit / size;
+	vec2 upper_limit_mod = upper_limit / size;
+	if (UV.x <= upper_limit_mod.x && UV.x >= lower_limit_mod.x) {
+		if (UV.y <= upper_limit_mod.y && UV.y >= lower_limit_mod.y) {
+			COLOR = texture(TEXTURE, UV) * modulate;
+		} else {
+			COLOR = vec4(0);
+		}
+	} else {
+		COLOR = vec4(0);
+	}
 }
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}

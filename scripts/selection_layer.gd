@@ -6,6 +6,7 @@ var ons = {}
 var appended = false
 var tile_pos
 var selecting = false
+var selected_total = 0
 @onready var cursor = $"../Selection Cursor"
 
 func _ready() -> void:
@@ -23,10 +24,13 @@ func _process(_delta: float) -> void:
 		cursor.visible = false
 	if held and $"../SubViewport/revelation".get_cell_source_id(tile_pos) > 0 and !appended and selecting:
 		appended = true
-		if !erasing:	
+		if !erasing and selected_total < $"../CanvasLayer/Upgrade Menu/Upgrade Button".totalable:	
 			ons[tile_pos] = true
-		elif get_cell_source_id(tile_pos) > -1:
+			if !get_cell_tile_data(tile_pos):
+				selected_total += 1
+		elif get_cell_source_id(tile_pos) > -1 and erasing:
 			ons[tile_pos] = false
+			selected_total -= 1
 		clear()
 		var tiles_to_update = []
 		for key in ons:

@@ -23,6 +23,7 @@ extends Node2D
 var mouse = false
 var player
 var mouse_whole = false
+var totalable = 0
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
@@ -109,6 +110,10 @@ func _input(event: InputEvent) -> void:
 			open = !open
 		if mouse_whole and button and upgrade:
 			$"..".open = false
+			$"../../Selection Visibilty Controller".visible = true
 			player.ui += 1
 			player.coins -= 1
+			if totalable == 0:
+				$"../../../Selection Layer".selected_total = 0
+			totalable += 25
 			$"../../../Selection Layer".selecting = true
