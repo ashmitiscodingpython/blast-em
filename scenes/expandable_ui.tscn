@@ -16,6 +16,7 @@
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktwmf"]
+resource_local_to_scene = true
 size = Vector2(276, 112)
 
 [node name="Expandable UI" type="Node2D" unique_id=846319715]

@@ -23,12 +23,17 @@ extends Node2D
 @export var upgrade = false
 @export var done = false
 @export var crate = false
+@export var guns_confirm = false
+@export var guns_reroll = false
 
 var mouse = false
 var player
 var mouse_whole = false
 var totalable = 0
 var orig_scale
+var hidden_chosen
+var rolls_left = 0
+var cooldown = 0
 
 func set_children_modulate():
 	for child in get_children():
@@ -57,6 +62,15 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
+	if button and guns_reroll:
+		if cooldown > 0:
+			cooldown -= _delta
+		if rolls_left > 0 and cooldown <= 0:
+			rolls_left -= 1
+			player.chosen_gun = $"../../../Guns Info".gun_names[rolls_left % 6]
+			cooldown = pow(((50 - rolls_left) / 49.0), 5)
+			if rolls_left == 0:
+				$"../Burst".emitting = true
 	if button and upgrade:
 		if player.coins < 1:
 			mouse_whole = false
@@ -142,13 +156,18 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if mouse:
 			open = !open
+		if mouse_whole and button and guns_confirm:
+			$"../../../Guns Info".current_gun = player.chosen_gun
+			$"..".open = false
+		if mouse_whole and button and guns_reroll:
+			hidden_chosen = $"../../../Guns Info".gun_names.pick_random()
+			rolls_left = 50
 		if mouse_whole and button and upgrade:
 			if $"../../Cooldown Bar".visible:
 				$"../../Cooldown Bar".visible = false
 				$"../../../EnemySpawner".paused = true
 			$"..".open = false
 			$"../../Selection Done".visible = true
-			print(player.keys)
 			if player.keys > 0:
 				$"../../Selection Visibilty Controller".positions = Vector2(73, 239)
 				$"../../Selection Visibilty Controller".set_posses()
@@ -177,4 +196,4 @@ func _input(event: InputEvent) -> void:
 					selection.ons[pos] = false
 			selection.update_cells()
 		if mouse_whole and button and crate:
-			pass
+			player.chosen_gun = $"../../Guns Info".gun_names.pick_random()

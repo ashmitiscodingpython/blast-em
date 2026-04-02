@@ -29,7 +29,9 @@
 [ext_resource type="Script" uid="uid://x4x6dri0ejdb" path="res://fog.gd" id="22_e8dv2"]
 [ext_resource type="TileSet" uid="uid://dgmrt52oocod7" path="res://fog.tres" id="23_e8dv2"]
 [ext_resource type="Script" uid="uid://3shckdkrlmi4" path="res://scripts/selection_layer.gd" id="24_2nhjh"]
+[ext_resource type="Texture2D" uid="uid://bjodtkaeaemqt" path="res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0005.png" id="25_540hr"]
 [ext_resource type="Texture2D" uid="uid://cuiovru60agu0" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0104.png" id="25_bjha6"]
+[ext_resource type="Script" uid="uid://bwdm0dbvjwcsl" path="res://scripts/gun_picture.gd" id="26_6ip5v"]
 [ext_resource type="Script" uid="uid://btef8lfpb8qr5" path="res://scripts/guns_info.gd" id="30_2u7jv"]
 [ext_resource type="PackedScene" uid="uid://chytvchqjk781" path="res://scenes/key.tscn" id="32_ornx7"]
 [ext_resource type="Texture2D" uid="uid://d2jwv84vi82a6" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0216.png" id="33_cnnru"]
@@ -107,6 +109,28 @@ shader = ExtResource("16_ta5nu")
 shader_parameter/color = Color(1, 1, 1, 0.5686275)
 shader_parameter/background = Color(0, 0, 0, 0)
 shader_parameter/position = Vector2(1075, 571)
+
+[sub_resource type="Gradient" id="Gradient_6ip5v"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q5dlx"]
+gradient = SubResource("Gradient_6ip5v")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.6837607, 0.35470086)
+
+[sub_resource type="Gradient" id="Gradient_c4wnb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7plk7"]
+gradient = SubResource("Gradient_c4wnb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fbwgr"]
+particle_flag_disable_z = true
+radial_velocity_min = 19.859978
+radial_velocity_max = 158.93997
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_7plk7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e8dv2"]
 shader = ExtResource("20_7vxoj")
@@ -399,6 +423,62 @@ script = ExtResource("11_hqns4")
 constant = true
 text_ = "SELECTING AREA"
 scale_ = 1.5
+
+[node name="Gun Selection" parent="CanvasLayer" unique_id=2048687188 instance=ExtResource("14_nr8wp")]
+position = Vector2(576, 324)
+scale = Vector2(2, 2)
+size = Vector2(220, 64)
+text_included = true
+close_button = false
+text = "Choose Gun"
+relative_position = Vector2(-60, -32)
+
+[node name="Gun Picture" type="Sprite2D" parent="CanvasLayer/Gun Selection" unique_id=2108816513]
+texture_filter = 1
+position = Vector2(-64.49, 2.26)
+scale = Vector2(2.605, 2.605)
+texture = ExtResource("25_540hr")
+script = ExtResource("26_6ip5v")
+
+[node name="Gun Name" type="Node2D" parent="CanvasLayer/Gun Selection" unique_id=1982746526]
+position = Vector2(-60.305, 34.95)
+script = ExtResource("11_hqns4")
+text_ = "Rifle"
+align_ = "center"
+scale_ = 0.815
+gun = true
+
+[node name="Choose" parent="CanvasLayer/Gun Selection" unique_id=1423767920 instance=ExtResource("14_nr8wp")]
+position = Vector2(60.435, -21.405)
+size = Vector2(60, -10)
+button = true
+text_included = true
+close_button = false
+text = "CHOOSE"
+relative_position = Vector2(4, 0)
+button_scale = 1.08
+guns_confirm = true
+
+[node name="Reroll" parent="CanvasLayer/Gun Selection" unique_id=585299720 instance=ExtResource("14_nr8wp")]
+position = Vector2(60.435, 23.62)
+size = Vector2(60, -10)
+button = true
+text_included = true
+close_button = false
+text = "REROLL"
+relative_position = Vector2(4, 0)
+button_scale = 1.08
+guns_reroll = true
+
+[node name="Burst" type="GPUParticles2D" parent="CanvasLayer/Gun Selection" unique_id=1790504732]
+position = Vector2(-64.49, 2.26)
+scale = Vector2(0.5, 0.5)
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_q5dlx")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fbwgr")
 
 [node name="Fog" type="Sprite2D" parent="." unique_id=1280247946]
 visible = false

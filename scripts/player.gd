@@ -34,6 +34,7 @@ var enemies_on = []
 signal damage
 var ui = 0
 var keys = 0
+var chosen_gun
 
 func spawn_bullet(current):
 	var bullet = load("res://scenes/node_2d.tscn").instantiate()
@@ -96,6 +97,7 @@ func direction(target: Vector2):
 	return atan2((position.y - target.y), (position.x - target.x))
 
 func _ready() -> void:
+	chosen_gun = $"../Guns Info".gun_names.pick_random()
 	for collayer in collayers:
 		collayer.modulate = Color(1, 1, 1, 0)
 	bar.position = Vector2(0, 20)

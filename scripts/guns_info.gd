@@ -23,7 +23,7 @@ func rating(ratings: Array[float], bazooka: bool, path: String):
 
 var guns = {
 	"Pistol": rating([1, 5, 5, 7, 3, 7], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0002.png"),
-	"SMG": rating([3, 6, 2, 10, 1, 2], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0004.png"),
+	"SMG": rating([3, 6, 2, 10, 1, 1], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0004.png"),
 	"Shotgun": rating([9, 4, 9, 3, 9, 2], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0006.png"),
 	"Rifle": rating([5, 7, 7, 5, 5, 8], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0007.png"),
 	"Sniper": rating([10, 10, 10, 2, 8, 10], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0003.png"),
@@ -32,9 +32,7 @@ var guns = {
 
 var current_gun = "SMG"
 var current_details = {}
-
-func _ready() -> void:
-	pass
+var gun_names = ["Pistol", "SMG", "Shotgun", "Rifle", "Bazooka", "Sniper"]
 
 func _process(_delta: float) -> void:
 	current_details = guns[current_gun]

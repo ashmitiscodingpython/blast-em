@@ -11,6 +11,7 @@ extends Node2D
 @export var round_announcer = false
 @export var selection = false
 @export var keys = false
+@export var gun = false
 
 @warning_ignore("unused_signal")
 signal round
@@ -91,6 +92,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if !constant:
+		if gun:
+			write(text_, text_position, align_, scale_)
 		if keys:
 			write(str($"../../Player".keys), Vector2(0, 0), "left", 3)
 		if selection:
