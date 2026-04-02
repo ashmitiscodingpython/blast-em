@@ -40,6 +40,8 @@ func spawn_bullet(current):
 	var bullet = load("res://scenes/node_2d.tscn").instantiate()
 	bullet.position = $weapon.global_position
 	var rotadd = randf_range(-current["Accuracy"], current["Accuracy"])
+	if $"../Guns Info".current_gun == "Bazooka":
+		bullet.bazooka = true
 	bullet.rotation = $weapon.rotation + deg_to_rad(90) + deg_to_rad(rotadd)
 	bullet.speed = current["Firepower"]
 	bullet.z_index = laye
@@ -167,6 +169,8 @@ func _process(_delta: float) -> void:
 			rescol()
 			nalpha()
 	
+	print(ui)
+	ui = clamp(ui, 0, 100000)
 	var current = $"../Guns Info".current_details
 	bar.health = health / 5.0
 	if cooldown > 0:

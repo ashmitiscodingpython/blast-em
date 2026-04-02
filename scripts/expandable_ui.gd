@@ -34,12 +34,15 @@ var orig_scale
 var hidden_chosen
 var rolls_left = 0
 var cooldown = 0
+var disabled = false
 
 func set_children_modulate():
 	for child in get_children():
 		child.modulate = modulate
 
 func _ready() -> void:
+	if name == "Gun Selection" or name == "Crate UI":
+		visible = true
 	orig_scale = scale
 	player = get_tree().get_first_node_in_group("Player")
 	if text_included:
@@ -62,20 +65,34 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
+	if button and crate:
+		if player.keys < 1:
+			disabled = true
+			modulate = Color(0.7, 0.7, 0.7, modulate.a)
+		else:
+			disabled = false
+			modulate = Color(1, 1, 1, modulate.a)
 	if button and guns_reroll:
+		if player.coins < 1:
+			disabled = true
+			modulate = Color(0.7, 0.7, 0.7, 1)
+		else:
+			disabled = false
+			modulate = Color(1, 1, 1, 1)
 		if cooldown > 0:
 			cooldown -= _delta
 		if rolls_left > 0 and cooldown <= 0:
 			rolls_left -= 1
-			player.chosen_gun = $"../../../Guns Info".gun_names[rolls_left % 6]
-			cooldown = pow(((50 - rolls_left) / 49.0), 5)
+			player.chosen_gun = $"../../../Guns Info".gun_names[(rolls_left + hidden_chosen) % 6]
+			cooldown = pow(((50 - rolls_left) / 49.0), 7)
 			if rolls_left == 0:
 				$"../Burst".emitting = true
 	if button and upgrade:
 		if player.coins < 1:
-			mouse_whole = false
+			disabled = true
 			modulate = Color(0.7, 0.7, 0.7, 1)
 		else:
+			disabled = false
 			modulate = Color(1, 1, 1, 1)
 	if mouse_whole and button:
 		scale += ((orig_scale * button_scale) - scale) / 5
@@ -144,11 +161,12 @@ func mouse_on() -> void:
 	if button:
 		if not mouse_whole:
 			player.ui += 1
-		mouse_whole = true
+		if !disabled:
+			mouse_whole = true
 
 func mouse_off() -> void:
 	if button:
-		if mouse_whole:
+		if mouse_whole or disabled:
 			player.ui -= 1
 		mouse_whole = false
 
@@ -159,9 +177,11 @@ func _input(event: InputEvent) -> void:
 		if mouse_whole and button and guns_confirm:
 			$"../../../Guns Info".current_gun = player.chosen_gun
 			$"..".open = false
+			player.keys -= 1
 		if mouse_whole and button and guns_reroll:
-			hidden_chosen = $"../../../Guns Info".gun_names.pick_random()
+			hidden_chosen = randi_range(0, 5)
 			rolls_left = 50
+			player.coins -= 1
 		if mouse_whole and button and upgrade:
 			if $"../../Cooldown Bar".visible:
 				$"../../Cooldown Bar".visible = false
@@ -197,3 +217,8 @@ func _input(event: InputEvent) -> void:
 			selection.update_cells()
 		if mouse_whole and button and crate:
 			player.chosen_gun = $"../../Guns Info".gun_names.pick_random()
+			$"../../CanvasLayer/Gun Selection".open = true
+			player.ui -= 1
+			var last_keys = player.keys
+			await (player.keys == last_keys - 1)
+			$"..".queue_free()

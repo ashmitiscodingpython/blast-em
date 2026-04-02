@@ -34,9 +34,7 @@
 [ext_resource type="Script" uid="uid://bwdm0dbvjwcsl" path="res://scripts/gun_picture.gd" id="26_6ip5v"]
 [ext_resource type="Script" uid="uid://btef8lfpb8qr5" path="res://scripts/guns_info.gd" id="30_2u7jv"]
 [ext_resource type="PackedScene" uid="uid://chytvchqjk781" path="res://scenes/key.tscn" id="32_ornx7"]
-[ext_resource type="Texture2D" uid="uid://d2jwv84vi82a6" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0216.png" id="33_cnnru"]
-[ext_resource type="Script" uid="uid://bvqc51ijqgdtl" path="res://scripts/crate.gd" id="34_540hr"]
-[ext_resource type="Script" uid="uid://cprd1qrxtd2er" path="res://scripts/key_image.gd" id="35_cnnru"]
+[ext_resource type="PackedScene" uid="uid://d1y8vm550jj7c" path="res://scenes/crate.tscn" id="35_cnnru"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
 size = Vector2(16, 17.487)
@@ -137,9 +135,6 @@ shader = ExtResource("20_7vxoj")
 shader_parameter/noise_tex = ExtResource("21_ei405")
 shader_parameter/speed = 1.327
 shader_parameter/density = 5.795
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ornx7"]
-size = Vector2(16, 14)
 
 [node name="Node2D" type="Node2D" unique_id=323521580]
 metadata/_edit_vertical_guides_ = [-1.0]
@@ -243,7 +238,6 @@ autostart = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
-disabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=349691785 groups=["Canvas"]]
 
@@ -274,6 +268,7 @@ texture = ExtResource("9_ir8iy")
 script = ExtResource("10_ir8iy")
 
 [node name="Selection Display" type="Sprite2D" parent="CanvasLayer" unique_id=1122303822]
+visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_24dk6")
 position = Vector2(73, 239)
@@ -282,6 +277,7 @@ texture = ExtResource("14_ebxd8")
 offset = Vector2(48, 8)
 
 [node name="SLASH" type="Sprite2D" parent="CanvasLayer" unique_id=1709457064]
+visible = false
 texture_filter = 1
 position = Vector2(182, 239)
 scale = Vector2(3, 3.7)
@@ -289,6 +285,7 @@ skew = 0.2635447
 texture = ExtResource("15_2u7jv")
 
 [node name="Selection Counter" type="Node2D" parent="CanvasLayer" unique_id=1920812088]
+visible = false
 position = Vector2(150, 239)
 script = ExtResource("11_hqns4")
 text_ = "0 25"
@@ -370,6 +367,7 @@ texture = ExtResource("9_ir8iy")
 script = ExtResource("10_ir8iy")
 
 [node name="Upgrade Button" type="Area2D" parent="CanvasLayer" unique_id=969905798]
+visible = false
 position = Vector2(1075, 571)
 script = ExtResource("15_rjqkl")
 
@@ -425,9 +423,11 @@ text_ = "SELECTING AREA"
 scale_ = 1.5
 
 [node name="Gun Selection" parent="CanvasLayer" unique_id=2048687188 instance=ExtResource("14_nr8wp")]
+visible = false
 position = Vector2(576, 324)
 scale = Vector2(2, 2)
 size = Vector2(220, 64)
+open = false
 text_included = true
 close_button = false
 text = "Choose Gun"
@@ -466,9 +466,16 @@ button = true
 text_included = true
 close_button = false
 text = "REROLL"
-relative_position = Vector2(4, 0)
+relative_position = Vector2(-4, 0)
 button_scale = 1.08
 guns_reroll = true
+
+[node name="Star" type="Sprite2D" parent="CanvasLayer/Gun Selection/Reroll" unique_id=236522746 groups=["Show"]]
+z_index = 10
+texture_filter = 1
+position = Vector2(34.095, 0)
+texture = ExtResource("9_ir8iy")
+script = ExtResource("10_ir8iy")
 
 [node name="Burst" type="GPUParticles2D" parent="CanvasLayer/Gun Selection" unique_id=1790504732]
 position = Vector2(-64.49, 2.26)
@@ -535,41 +542,13 @@ texture = ExtResource("25_bjha6")
 unique_name_in_owner = true
 script = ExtResource("30_2u7jv")
 
-[node name="Key" parent="." unique_id=815351769 instance=ExtResource("32_ornx7")]
-position = Vector2(438, 154)
+[node name="Keys" type="Node2D" parent="." unique_id=1297619757]
 
-[node name="Crate" type="StaticBody2D" parent="." unique_id=2067035072]
-position = Vector2(445, 238)
-script = ExtResource("34_540hr")
+[node name="Key" parent="Keys" unique_id=815351769 instance=ExtResource("32_ornx7")]
+position = Vector2(185, 33)
 
-[node name="Crate" type="Sprite2D" parent="Crate" unique_id=111653954]
-texture_filter = 1
-texture = ExtResource("33_cnnru")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Crate" unique_id=1856345128]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_ornx7")
-
-[node name="Expandable UI" parent="Crate" unique_id=1353836691 instance=ExtResource("14_nr8wp")]
-position = Vector2(-0.38, -29.75)
-size = Vector2(12, -10)
-closed_position = Vector2(0, 0)
-open_position = Vector2(0, -30)
-open = false
-button = true
-text_included = true
-close_button = false
-text = "1"
-relative_position = Vector2(-5, 0)
-button_scale = 1.1
-fade_when_closed = true
-crate = true
-
-[node name="Key Image" type="Sprite2D" parent="Crate" unique_id=453697349]
-texture_filter = 1
-position = Vector2(5.5, -30)
-texture = ExtResource("11_24dk6")
-script = ExtResource("35_cnnru")
+[node name="Crate" parent="." unique_id=934957810 instance=ExtResource("35_cnnru")]
+position = Vector2(193, 197)
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
 [connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]

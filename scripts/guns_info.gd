@@ -27,10 +27,10 @@ var guns = {
 	"Shotgun": rating([9, 4, 9, 3, 9, 2], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0006.png"),
 	"Rifle": rating([5, 7, 7, 5, 5, 8], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0007.png"),
 	"Sniper": rating([10, 10, 10, 2, 8, 10], false, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0003.png"),
-	"Bazooka": rating([10, 2, 10, 2, 10, 5], true, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0013.png")
+	"Bazooka": rating([10, 2, 10, 4, 10, 5], true, "res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0013.png")
 }
 
-var current_gun = "SMG"
+var current_gun = "Pistol"
 var current_details = {}
 var gun_names = ["Pistol", "SMG", "Shotgun", "Rifle", "Bazooka", "Sniper"]
 

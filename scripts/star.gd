@@ -9,7 +9,10 @@ func _ready() -> void:
 	if get_groups().find("Show") > -1:
 		shown = true
 	else:
-		player_ = $"../Player"
+		if $"..".name == "Keys":
+			player_ = $"../../Player"
+		else:
+			player_ = $"../Player"
 
 func _process(_delta: float) -> void:
 	time += _delta * 3
