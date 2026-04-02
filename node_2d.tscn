@@ -452,6 +452,7 @@ position = Vector2(406, 275)
 texture = ExtResource("25_bjha6")
 
 [node name="Guns Info" type="Node2D" parent="." unique_id=1588773744]
+unique_name_in_owner = true
 script = ExtResource("30_2u7jv")
 
 [node name="Key" parent="." unique_id=815351769 instance=ExtResource("32_ornx7")]

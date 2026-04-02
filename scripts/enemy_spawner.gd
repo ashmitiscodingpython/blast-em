@@ -4,8 +4,8 @@ extends Node2D
 @export var disabled = false
 var difficulty = 1
 var round_number = 1
-var spawn = 5
-var left = 5 # Number of enemies left to spawn
+var spawn = 2
+var left = 2 # Number of enemies left to spawn
 var rounded = false # Spawn enemies when true
 var enemy_cooldown = 1 # Constant enemy cooldown
 var time = 0
@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 			rounded = true
 			if !first_round:
 				enemy_cooldown += 0.2
-				spawn += 1
+				spawn = round(1 + pow(1.12, (round_number - 1)))
 				difficulty += 0.1
 				left = spawn
 				deaths = 0
@@ -90,7 +90,6 @@ func spawn_enemy():
 	var enemy = load("res://scenes/enemy.tscn").instantiate()
 	var rand_dir = randf_range(deg_to_rad(0), deg_to_rad(360))
 	var value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))
-	
 	enemy.global_position = value
 	enemy.type = ["Slug", "Bat", "Sock", "Bear"][randi_range(0, round(difficulty) - 1)]
 	get_tree().current_scene.add_child(enemy)

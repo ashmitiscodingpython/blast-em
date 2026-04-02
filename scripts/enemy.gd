@@ -54,7 +54,8 @@ func on_move() -> void:
 		move()
 	
 func _process(_delta: float) -> void:
-	bar.health = (float(health) / float(total_health)) * 100
+	if bar:
+		bar.health = (float(health) / float(total_health)) * 100
 	if player_.position.x > position.x:
 		$Enemy.scale.x = 1
 	else:
@@ -111,7 +112,7 @@ func dmg():
 				"Bat": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0007.png")
 				"Sock": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0011.png")
 				"Bear": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0015.png")
-		velocity = -2 * velocity
+		velocity = -$"../Guns Info".current_details["Knockback"] * velocity
 
 func player_dmg():
 	if $"." in player_.enemies_on:

@@ -35,6 +35,15 @@ signal damage
 var ui = 0
 var keys = 0
 
+func spawn_bullet(current):
+	var bullet = load("res://scenes/node_2d.tscn").instantiate()
+	bullet.position = $weapon.global_position
+	var rotadd = randf_range(-current["Accuracy"], current["Accuracy"])
+	bullet.rotation = $weapon.rotation + deg_to_rad(90) + deg_to_rad(rotadd)
+	bullet.speed = current["Firepower"]
+	bullet.z_index = laye
+	get_tree().current_scene.add_child(bullet)
+
 func turn_off_collision(from):
 	var i = 0
 	for layer in layers:
@@ -156,22 +165,24 @@ func _process(_delta: float) -> void:
 			rescol()
 			nalpha()
 	
+	var current = $"../Guns Info".current_details
 	bar.health = health / 5.0
 	if cooldown > 0:
 		cooldown += _delta
 	if held and !cooldown > 0:
 		$"BulletSound".playing = true
 		cooldown += _delta
-		var bullet = load("res://scenes/node_2d.tscn").instantiate()
-		bullet.position = $weapon.global_position
-		var current = $"../Guns Info".current_details
-		var rotadd = randf_range(-current["Accuracy"], current["Accuracy"])
-		bullet.rotation = $weapon.rotation + deg_to_rad(90) + deg_to_rad(rotadd)
-		bullet.speed = current["Firepower"]
-		bullet.z_index = laye
-		get_tree().current_scene.add_child(bullet)
-	if cooldown > 0.1:
-		cooldown = 0
+		spawn_bullet(current)
+		if $"../Guns Info".current_gun == "Shotgun":
+			for i in range(3):
+				spawn_bullet(current)
+		var dir = $weapon.rotation + deg_to_rad(180)
+		var recoil = Vector2(cos(dir), sin(dir)) * current["Recoil"]
+		velocity += recoil * 15
+	if current:
+		weapon.texture = load(current["Sprite"])
+		if cooldown > current["Reload"]:
+			cooldown = 0
 	if input_dir.x < 0:
 		sprite.scale.x = -1
 	elif input_dir.x > 0:
