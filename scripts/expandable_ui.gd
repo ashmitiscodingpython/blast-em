@@ -18,14 +18,21 @@ extends Node2D
 @export var scale_ = 1.0
 
 @export_group("Button Actions")
+@export var button_scale = 1.2
+@export var fade_when_closed = false
 @export var upgrade = false
 @export var done = false
+@export var crate = false
 
 var mouse = false
 var player
 var mouse_whole = false
 var totalable = 0
 var orig_scale
+
+func set_children_modulate():
+	for child in get_children():
+		child.modulate = modulate
 
 func _ready() -> void:
 	orig_scale = scale
@@ -57,14 +64,34 @@ func _process(_delta: float) -> void:
 		else:
 			modulate = Color(1, 1, 1, 1)
 	if mouse_whole and button:
-		scale += ((orig_scale / 0.83) - scale) / 5
+		scale += ((orig_scale * button_scale) - scale) / 5
 	elif button:
 		scale += ((orig_scale) - scale) / 5
 	if !open and cond:
 		visible = true
 	if open and process:
+		if fade_when_closed:
+			var to_transition = Color(1, 1, 1, 1)
+			var result = Color(
+				to_transition.r - modulate.r,
+				to_transition.g - modulate.g,
+				to_transition.b - modulate.b,
+				to_transition.a - modulate.a
+			)
+			print(result)
+			modulate += result / 5
 		position += (open_position - position) / 5
 	elif process:
+		if fade_when_closed:
+			var to_transition = Color(1, 1, 1, 0)
+			var result = Color(
+				to_transition.r - modulate.r,
+				to_transition.g - modulate.g,
+				to_transition.b - modulate.b,
+				to_transition.a - modulate.a
+			)
+			print(result)
+			modulate += result / 5
 		position += (closed_position - position) / 5
 	if process:
 		if close_button:
@@ -123,8 +150,10 @@ func _input(event: InputEvent) -> void:
 				$"../../../EnemySpawner".paused = true
 			$"..".open = false
 			$"../../Selection Done".visible = true
+			print(player.keys)
 			if player.keys > 0:
-				$"../Selection Visibilty Controller".positions = Vector2(73, 239)
+				$"../../Selection Visibilty Controller".positions = Vector2(73, 239)
+				$"../../Selection Visibilty Controller".set_posses()
 			$"../../Selection Visibilty Controller".visible = true
 			player.coins -= 1
 			if totalable == 0:

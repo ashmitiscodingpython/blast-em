@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://chytvchqjk781"]
+
+[ext_resource type="Texture2D" uid="uid://6igueefh6eb2" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0201.png" id="1_fttkb"]
+[ext_resource type="Script" uid="uid://dx0xo2ug1ws4f" path="res://scripts/star.gd" id="2_wy8tx"]
+
+[node name="Key" type="Sprite2D" unique_id=815351769]
+texture_filter = 1
+texture = ExtResource("1_fttkb")
+script = ExtResource("2_wy8tx")
+key = true
