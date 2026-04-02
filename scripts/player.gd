@@ -169,7 +169,6 @@ func _process(_delta: float) -> void:
 			rescol()
 			nalpha()
 	
-	print(ui)
 	ui = clamp(ui, 0, 100000)
 	var current = $"../Guns Info".current_details
 	bar.health = health / 5.0

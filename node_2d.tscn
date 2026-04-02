@@ -543,6 +543,7 @@ unique_name_in_owner = true
 script = ExtResource("30_2u7jv")
 
 [node name="Keys" type="Node2D" parent="." unique_id=1297619757]
+z_index = 5
 
 [node name="Key" parent="Keys" unique_id=815351769 instance=ExtResource("32_ornx7")]
 position = Vector2(185, 33)

@@ -216,8 +216,9 @@ func _input(event: InputEvent) -> void:
 					selection.ons[pos] = false
 			selection.update_cells()
 		if mouse_whole and button and crate:
-			player.chosen_gun = $"../../Guns Info".gun_names.pick_random()
 			$"../../CanvasLayer/Gun Selection".open = true
+			$"../../CanvasLayer/Gun Selection/Reroll".hidden_chosen = randi_range(0, 5)
+			$"../../CanvasLayer/Gun Selection/Reroll".rolls_left = 50
 			player.ui -= 1
 			var last_keys = player.keys
 			await (player.keys == last_keys - 1)
