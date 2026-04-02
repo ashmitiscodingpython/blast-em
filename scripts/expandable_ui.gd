@@ -58,7 +58,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
 	if button and upgrade:
-		if player.coins < 0:
+		if player.coins < 1:
 			mouse_whole = false
 			modulate = Color(0.7, 0.7, 0.7, 1)
 		else:
@@ -78,7 +78,6 @@ func _process(_delta: float) -> void:
 				to_transition.b - modulate.b,
 				to_transition.a - modulate.a
 			)
-			print(result)
 			modulate += result / 5
 		position += (open_position - position) / 5
 	elif process:
@@ -90,7 +89,6 @@ func _process(_delta: float) -> void:
 				to_transition.b - modulate.b,
 				to_transition.a - modulate.a
 			)
-			print(result)
 			modulate += result / 5
 		position += (closed_position - position) / 5
 	if process:
@@ -178,3 +176,5 @@ func _input(event: InputEvent) -> void:
 					$"../../Fog Collision".erase_cell(pos)
 					selection.ons[pos] = false
 			selection.update_cells()
+		if mouse_whole and button and crate:
+			pass

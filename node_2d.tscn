@@ -199,7 +199,6 @@ libraries/ = SubResource("AnimationLibrary_d21ai")
 [node name="weapon" type="Sprite2D" parent="Player" unique_id=28092751]
 texture_filter = 1
 position = Vector2(77, 49)
-rotation = 2.8221974
 texture = ExtResource("5_q6r6c")
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Player" unique_id=1527927636]

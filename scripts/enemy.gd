@@ -14,11 +14,19 @@ var dead = false
 var death_timer = 0
 var dmg_timer = 0
 var dmg_ = false
+var health = 0
+var total_health = 0
 
 func _ready() -> void:
 	player_ = get_tree().get_first_node_in_group("Player")
 	hurt.connect(dmg)
 	player_.damage.connect(player_dmg)
+	match type:
+		"Bear": total_health = 200
+		"Slug": total_health = 25
+		"Bat": total_health = 24
+		"Sock": total_health = 34
+	health = total_health
 	if type == "Bat":
 		collision_layer = 8388608
 		collision_mask = 2
@@ -46,6 +54,7 @@ func on_move() -> void:
 		move()
 	
 func _process(_delta: float) -> void:
+	bar.health = (float(health) / float(total_health)) * 100
 	if player_.position.x > position.x:
 		$Enemy.scale.x = 1
 	else:
@@ -86,11 +95,7 @@ func dmg():
 			bar.health = 100
 			add_child(bar)
 			bar.scale = Vector2(0.5, 0.5)
-		match type:
-			"Slug": bar.health -= 10
-			"Bear": bar.health -= 0.5
-			"Bat": bar.health -= 4
-			"Sock": bar.health -= 3
+		health -= 1
 		if bar.health <= 0 and !dead:
 			$"../EnemySpawner".death.emit()
 			$CollisionShape2D.queue_free()

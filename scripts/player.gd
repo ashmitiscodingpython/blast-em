@@ -24,7 +24,7 @@ var held = false
 var cooldown = 0
 var laye = 0
 var stair_tile
-var coins = 10
+var coins = 0
 var bar = load("res://scenes/health.tscn").instantiate()
 var health = 500
 var upordown = 0
@@ -164,8 +164,10 @@ func _process(_delta: float) -> void:
 		cooldown += _delta
 		var bullet = load("res://scenes/node_2d.tscn").instantiate()
 		bullet.position = $weapon.global_position
-		bullet.rotation = $weapon.rotation + deg_to_rad(90)
-		bullet.speed = 5
+		var current = $"../Guns Info".current_details
+		var rotadd = randf_range(-current["Accuracy"], current["Accuracy"])
+		bullet.rotation = $weapon.rotation + deg_to_rad(90) + deg_to_rad(rotadd)
+		bullet.speed = current["Firepower"]
 		bullet.z_index = laye
 		get_tree().current_scene.add_child(bullet)
 	if cooldown > 0.1:
