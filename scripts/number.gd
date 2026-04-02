@@ -10,6 +10,7 @@ extends Node2D
 @export var coins = false
 @export var round_announcer = false
 @export var selection = false
+@export var keys = false
 
 @warning_ignore("unused_signal")
 signal round
@@ -90,6 +91,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if !constant:
+		if keys:
+			write(str($"../../Player".keys), Vector2(0, 0), "left", 3)
 		if selection:
 			var selected_total = $"../../Selection Layer".selected_total
 			var totalable = $"../Upgrade Menu/Upgrade Button".totalable

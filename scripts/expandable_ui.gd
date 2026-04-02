@@ -123,11 +123,13 @@ func _input(event: InputEvent) -> void:
 				$"../../../EnemySpawner".paused = true
 			$"..".open = false
 			$"../../Selection Done".visible = true
+			if player.keys > 0:
+				$"../Selection Visibilty Controller".positions = Vector2(73, 239)
 			$"../../Selection Visibilty Controller".visible = true
-			player.ui += 1
 			player.coins -= 1
 			if totalable == 0:
 				$"../../../Selection Layer".selected_total = 0
+				player.ui += 1
 			totalable += 25
 			$"../../../Selection Layer".selecting = true
 		if mouse_whole and button and done:

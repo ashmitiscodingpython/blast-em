@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
-	var now = Vector2i(floor(mouse_pos.x / 16), floor(mouse_pos.y / 16)) - Vector2i(72, 40)
+	var now = Vector2i(floor(mouse_pos.x / 16), floor(mouse_pos.y / 16)) + Vector2i(36, 20)
 	if tile_pos != now:
 		tile_pos = now
 		appended = false
@@ -40,7 +40,7 @@ func _process(_delta: float) -> void:
 			ons[tile_pos] = false
 			selected_total -= 1
 		update_cells()
-	cursor.position = ((tile_pos as Vector2) * Vector2(16, 16)) + Vector2(8, 8)
+	cursor.position = (((tile_pos - Vector2i(36, 20)) as Vector2) * Vector2(16, 16)) + Vector2(8, 8)
 	if $"../SubViewport/revelation".get_cell_source_id(tile_pos) > 0:
 		cursor.modulate = Color(1, 1, 1, 1)
 	else:

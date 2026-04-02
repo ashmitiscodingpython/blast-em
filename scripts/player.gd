@@ -33,6 +33,7 @@ var tick = false
 var enemies_on = []
 signal damage
 var ui = 0
+var keys = 0
 
 func turn_off_collision(from):
 	var i = 0
@@ -110,10 +111,20 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:
+	# IN CASE YOU FORGET AGAIN
+	# To make a plateau, first add the bottom part
+	# thingies at the lower level, then add the
+	# actual plateau part on the next layer
+	# the collayers are for the stairs. Wherever
+	# there is a stair, add any full collision
+	# tile to that coord for collayer [layer of
+	# the stair + 1]
+	# Also remove any tiles above a plateau
+	# in the below layer
 	var layer_data = layer_no(true)
 	var az = layer_data[0]
 	var data: TileData = layer_data[1]
-	behind = true if (az != z and !on_stair) else false
+	behind = az != z and !on_stair
 	if data.get_custom_data("Stair"):
 		on_stair = true
 		if !assigned:
@@ -122,7 +133,7 @@ func _process(_delta: float) -> void:
 	else:
 		on_stair = false
 		assigned = false
-	behind = true if (az != z and !on_stair and !z > az) else false
+	behind = az != z and !on_stair and !z > az
 	tick = false
 	if z > az and !on_stair:
 		z = az
