@@ -25,6 +25,7 @@ extends Node2D
 @export var crate = false
 @export var guns_confirm = false
 @export var guns_reroll = false
+@export var title = false
 
 var mouse = false
 var player
@@ -161,14 +162,14 @@ func _mouse_left() -> void:
 
 func mouse_on() -> void:
 	if button:
-		if not mouse_whole:
+		if not mouse_whole and !title:
 			player.ui += 1
 		if !disabled:
 			mouse_whole = true
 
 func mouse_off() -> void:
 	if button:
-		if mouse_whole or disabled:
+		if (mouse_whole or disabled) and !title:
 			player.ui -= 1
 		mouse_whole = false
 
@@ -224,4 +225,5 @@ func _input(event: InputEvent) -> void:
 			player.ui -= 1
 			var last_keys = player.keys
 			await (player.keys == last_keys - 1)
-			$"..".queue_free()
+			$"..".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
+			$"..".wasted = true

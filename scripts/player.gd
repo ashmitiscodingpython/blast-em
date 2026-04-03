@@ -24,7 +24,7 @@ var held = false
 var cooldown = 0
 var laye = 0
 var stair_tile
-var coins = 5
+var coins = 0
 var bar = load("res://scenes/health.tscn").instantiate()
 @export var health = 500
 var upordown = 0
@@ -194,6 +194,9 @@ func _process(_delta: float) -> void:
 		sprite.scale.x = -1
 	elif input_dir.x > 0:
 		sprite.scale.x = 1
+	elif input_dir.x == 0:
+		var dir = position.x - get_global_mouse_position().x
+		sprite.scale.x = -(dir / abs(dir))
 	if input_dir != Vector2(0, 0) and not animator.is_playing():
 		animator.play("walk")
 	elif input_dir == Vector2(0, 0) and animator.is_playing():
