@@ -37,6 +37,7 @@ fade_when_closed = true
 crate = true
 
 [node name="Key Image" type="Sprite2D" parent="." unique_id=489210559]
+visible = false
 texture_filter = 1
 position = Vector2(5.5, -30)
 texture = ExtResource("4_juhn0")

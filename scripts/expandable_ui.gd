@@ -41,8 +41,10 @@ func set_children_modulate():
 		child.modulate = modulate
 
 func _ready() -> void:
-	if name == "Gun Selection" or name == "Crate UI":
+	if name == "Gun Selection" or name == "Crate UI" or name == "Upgrade Menu":
 		visible = true
+		if name == "Crate UI":
+			$"../Key Image".visible = true
 	orig_scale = scale
 	player = get_tree().get_first_node_in_group("Player")
 	if text_included:

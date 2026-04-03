@@ -24,9 +24,9 @@ var held = false
 var cooldown = 0
 var laye = 0
 var stair_tile
-var coins = 0
+var coins = 5
 var bar = load("res://scenes/health.tscn").instantiate()
-var health = 500
+@export var health = 500
 var upordown = 0
 var assigned = false
 var tick = false
@@ -170,6 +170,8 @@ func _process(_delta: float) -> void:
 			nalpha()
 	
 	ui = clamp(ui, 0, 100000)
+	var cureffect = $"../CanvasLayer/Damage Overlay".material.get_shader_parameter("strength")
+	$"../CanvasLayer/Damage Overlay".material.set_shader_parameter("strength", cureffect + ((0 - cureffect) / 5))
 	var current = $"../Guns Info".current_details
 	bar.health = health / 5.0
 	if cooldown > 0:

@@ -38,13 +38,13 @@ func _process(delta: float) -> void:
 		# Enemy spawn initiator
 		if rounded:
 			rounded = false
-			spawn_enemy()
+			await spawn_enemy()
 			
 		# Continue spawning enemies
 		if !rounded and left > 0 and !waiting:
 			cooldown_left -= delta
 			if cooldown_left < 0:
-				spawn_enemy()
+				await spawn_enemy()
 		
 		# Current round is over, turn on cooldown
 		if deaths == spawn and !round_over and !waiting:
@@ -89,7 +89,12 @@ func _process(delta: float) -> void:
 func spawn_enemy():
 	var enemy = load("res://scenes/enemy.tscn").instantiate()
 	var rand_dir = randf_range(deg_to_rad(0), deg_to_rad(360))
-	var value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))
+	var value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))	
+	var pixel = Vector2i(floor(value.x / 16), floor(value.y / 16)) + Vector2i(36, 20)
+	while $"../SubViewport/revelation".get_cell_tile_data(pixel):
+		rand_dir = randf_range(deg_to_rad(0), deg_to_rad(360))
+		value = player_.position + Vector2(sin(rand_dir), cos(rand_dir)) * randi_range(100 - (25 * difficulty), 175 - (25 * difficulty))	
+		pixel = Vector2i(floor(value.x / 16), floor(value.y / 16)) + Vector2i(36, 20)
 	enemy.global_position = value
 	enemy.type = ["Slug", "Bat", "Sock", "Bear"][randi_range(0, round(difficulty) - 1)]
 	get_tree().current_scene.add_child(enemy)

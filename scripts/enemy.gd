@@ -116,6 +116,9 @@ func dmg():
 
 func player_dmg():
 	if $"." in player_.enemies_on:
+		$"../Camera2D".shake = 2
+		var mat: Material = $"../CanvasLayer/Damage Overlay".material
+		mat.set_shader_parameter("strength", 1.0)
 		for child in player_.get_children():
 			if child.name == "HurtSound":
 				child.playing = true

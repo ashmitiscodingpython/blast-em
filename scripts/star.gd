@@ -24,6 +24,7 @@ func _process(_delta: float) -> void:
 		if distance < 75:
 			position += (player_.position - position) / 5
 		if distance < 10:
+			player_.get_child(1).playing = true
 			if !key:
 				player_.coins += 1
 			else:
