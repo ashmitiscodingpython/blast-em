@@ -267,7 +267,6 @@ autostart = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
-disabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=349691785 groups=["Canvas"]]
 

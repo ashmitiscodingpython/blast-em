@@ -227,3 +227,6 @@ func _input(event: InputEvent) -> void:
 			await (player.keys == last_keys - 1)
 			$"..".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
 			$"..".wasted = true
+		if mouse_whole and button and title:
+			$"..".to_pos = Vector2(0, -800)
+			$"..".switching = true
