@@ -24,6 +24,7 @@ signal spawn_now
 var highlight = false
 var highli_done = false
 var paused = false
+@export var enemy_pause = false
 
 func _ready() -> void:
 	if !disabled:

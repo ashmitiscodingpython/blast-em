@@ -27,6 +27,7 @@ var stair_tile
 var coins = 0
 var bar = load("res://scenes/health.tscn").instantiate()
 @export var health = 500
+var dead = false
 var upordown = 0
 var assigned = false
 var tick = false
@@ -117,7 +118,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 	var target_vel = input_dir * speed
-	if input_dir != Vector2.ZERO:
+	if input_dir != Vector2.ZERO and !dead:
 		velocity = velocity.move_toward(target_vel, accel * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
@@ -170,47 +171,59 @@ func _process(_delta: float) -> void:
 			nalpha()
 	
 	ui = clamp(ui, 0, 100000)
-	var cureffect = $"../CanvasLayer/Damage Overlay".material.get_shader_parameter("strength")
-	$"../CanvasLayer/Damage Overlay".material.set_shader_parameter("strength", cureffect + ((0 - cureffect) / 5))
-	var current = $"../Guns Info".current_details
-	bar.health = health / 5.0
-	if cooldown > 0:
-		cooldown += _delta
-	if held and !cooldown > 0:
-		$"BulletSound".playing = true
-		cooldown += _delta
-		spawn_bullet(current)
-		if $"../Guns Info".current_gun == "Shotgun":
-			for i in range(3):
+	if health <= 0 and !dead:
+		dead = true
+		$"../EnemySpawner".disabled = true
+		$"../CanvasLayer/Win _ Lose".win__lose(false)
+		$"weapon".queue_free()
+		bar.queue_free()
+		$Sprite2D.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0003.png")
+	if !dead:
+		if keys > 0:
+			$"../CanvasLayer/Keys Display".visible = true
+			$"../CanvasLayer/Keys Counter".visible = true
+		var cureffect = $"../CanvasLayer/Damage Overlay".material.get_shader_parameter("strength")
+		$"../CanvasLayer/Damage Overlay".material.set_shader_parameter("strength", cureffect + ((0 - cureffect) / 5))
+		var current = $"../Guns Info".current_details
+		bar.health = health / 5.0
+		if cooldown > 0:
+			cooldown += _delta
+		if held and !cooldown > 0 and !dead:
+			if !$"../EnemySpawner".enemy_pause:
 				spawn_bullet(current)
-		var dir = $weapon.rotation + deg_to_rad(180)
-		var recoil = Vector2(cos(dir), sin(dir)) * current["Recoil"]
-		velocity += recoil * 15
-	if current:
-		weapon.texture = load(current["Sprite"])
-		if cooldown > current["Reload"]:
-			cooldown = 0
-	if input_dir.x < 0:
-		sprite.scale.x = -1
-	elif input_dir.x > 0:
-		sprite.scale.x = 1
-	elif input_dir.x == 0:
-		var dir = position.x - get_global_mouse_position().x
-		sprite.scale.x = -(dir / abs(dir))
-	if input_dir != Vector2(0, 0) and not animator.is_playing():
-		animator.play("walk")
-	elif input_dir == Vector2(0, 0) and animator.is_playing():
-		animator.stop()
-		sprite.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png")
-	weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
-	if weapon.rotation_degrees < 270 and weapon.rotation_degrees > 90:
-		weapon.scale.y = -1
-		wep = Vector2(-11, 0)
-	else:
-		weapon.scale.y = 1
-		wep = Vector2(11, 0)
-	weapon.position += (wep - weapon.position) / 5
-	weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
+				$"BulletSound".playing = true
+				cooldown += _delta
+				if $"../Guns Info".current_gun == "Shotgun":
+					for i in range(3):
+						spawn_bullet(current)
+				var dir = $weapon.rotation + deg_to_rad(180)
+				var recoil = Vector2(cos(dir), sin(dir)) * current["Recoil"]
+				velocity += recoil * 15
+		if current:
+			weapon.texture = load(current["Sprite"])
+			if cooldown > current["Reload"]:
+				cooldown = 0
+		if input_dir.x < 0:
+			sprite.scale.x = -1
+		elif input_dir.x > 0:
+			sprite.scale.x = 1
+		elif input_dir.x == 0:
+			var dir = position.x - get_global_mouse_position().x
+			sprite.scale.x = -(dir / abs(dir))
+		if input_dir != Vector2(0, 0) and not animator.is_playing() and !dead:
+			animator.play("walk")
+		elif input_dir == Vector2(0, 0) and animator.is_playing() and !dead:
+			animator.stop()
+			sprite.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0000.png")
+		weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
+		if weapon.rotation_degrees < 270 and weapon.rotation_degrees > 90:
+			weapon.scale.y = -1
+			wep = Vector2(-11, 0)
+		else:
+			weapon.scale.y = 1
+			wep = Vector2(11, 0)
+		weapon.position += (wep - weapon.position) / 5
+		weapon.rotation = direction(get_global_mouse_position()) + deg_to_rad(180)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

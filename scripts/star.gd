@@ -29,8 +29,4 @@ func _process(_delta: float) -> void:
 				player_.coins += 1
 			else:
 				player_.keys += 1
-				if player_.keys == 1:
-					var canvas = get_tree().get_first_node_in_group("Canvas")
-					canvas.get_child(1).visible = true
-					canvas.get_child(2).visible = true
 			queue_free()

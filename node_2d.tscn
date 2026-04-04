@@ -96,27 +96,6 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ka3"]
 size = Vector2(33.121017, 33.121044)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c4wnb"]
-shader = ExtResource("38_q5dlx")
-shader_parameter/radius = 1.245
-shader_parameter/strength = 0.0
-shader_parameter/color = Color(0.857202, 0, 0.1894379, 1)
-shader_parameter/background = Color(0, 0, 0, 0)
-shader_parameter/position = Vector2(576, 324)
-
-[sub_resource type="Gradient" id="Gradient_7plk7"]
-colors = PackedColorArray(0.99116415, 0.99116427, 0.99116415, 1, 1, 1, 1, 0)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fbwgr"]
-noise_type = 0
-fractal_gain = -0.485
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mj2a"]
-width = 1152
-height = 648
-noise = SubResource("FastNoiseLite_fbwgr")
-color_ramp = SubResource("Gradient_7plk7")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_24dk6"]
 shader = ExtResource("13_2hxjc")
 shader_parameter/lower_limit = Vector2(0, 48)
@@ -153,6 +132,27 @@ radial_velocity_min = 19.859978
 radial_velocity_max = 158.93997
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_7plk7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c4wnb"]
+shader = ExtResource("38_q5dlx")
+shader_parameter/radius = 1.245
+shader_parameter/strength = 0.0
+shader_parameter/color = Color(0.857202, 0, 0.1894379, 1)
+shader_parameter/background = Color(0, 0, 0, 0)
+shader_parameter/position = Vector2(576, 324)
+
+[sub_resource type="Gradient" id="Gradient_7plk7"]
+colors = PackedColorArray(0.99116415, 0.99116427, 0.99116415, 1, 1, 1, 1, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fbwgr"]
+noise_type = 0
+fractal_gain = -0.485
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mj2a"]
+width = 1152
+height = 648
+noise = SubResource("FastNoiseLite_fbwgr")
+color_ramp = SubResource("Gradient_7plk7")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e8dv2"]
 shader = ExtResource("20_7vxoj")
@@ -267,15 +267,8 @@ autostart = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=74797667]
 script = ExtResource("8_rj586")
-disabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=349691785 groups=["Canvas"]]
-
-[node name="Damage Overlay" type="Sprite2D" parent="CanvasLayer" unique_id=1715006379]
-modulate = Color(0.80655646, 0.06100855, 0, 1)
-material = SubResource("ShaderMaterial_c4wnb")
-position = Vector2(576, 324)
-texture = SubResource("NoiseTexture2D_7mj2a")
 
 [node name="Number" type="Node2D" parent="CanvasLayer" unique_id=1115201286]
 position = Vector2(100, 100)
@@ -525,10 +518,33 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_fbwgr")
 
 [node name="Win _ Lose" type="Node2D" parent="CanvasLayer" unique_id=1438347603]
-position = Vector2(576, 324)
+position = Vector2(598, 324)
 script = ExtResource("11_hqns4")
 align_ = "center"
 win_lose = true
+
+[node name="Retry Button" parent="CanvasLayer" unique_id=819738448 instance=ExtResource("14_nr8wp")]
+position = Vector2(576, 324)
+scale = Vector2(2, 2)
+size = Vector2(30, -10)
+closed_position = Vector2(576, 309.6)
+open_position = Vector2(576, 349.06)
+open = false
+button = true
+text_included = true
+auto_set_open_position = false
+close_button = false
+text = "RETRY"
+relative_position = Vector2(4.5, 0)
+button_scale = 1.08
+fade_when_closed = true
+retry = true
+
+[node name="Damage Overlay" type="Sprite2D" parent="CanvasLayer" unique_id=1715006379]
+modulate = Color(0.80655646, 0.06100855, 0, 1)
+material = SubResource("ShaderMaterial_c4wnb")
+position = Vector2(576, 324)
+texture = SubResource("NoiseTexture2D_7mj2a")
 
 [node name="Fog" type="Sprite2D" parent="." unique_id=1280247946]
 visible = false
@@ -637,27 +653,35 @@ position = Vector2(756, 636)
 
 [node name="Crate" parent="." unique_id=934957810 instance=ExtResource("35_cnnru")]
 position = Vector2(136, 183)
+golden = false
 
 [node name="Crate2" parent="." unique_id=195555727 instance=ExtResource("35_cnnru")]
 position = Vector2(1272, 27)
+golden = false
 
 [node name="Crate3" parent="." unique_id=1579776809 instance=ExtResource("35_cnnru")]
 position = Vector2(-182, -23)
+golden = false
 
 [node name="Crate4" parent="." unique_id=596295590 instance=ExtResource("35_cnnru")]
 position = Vector2(-37, 540)
+golden = false
 
 [node name="Crate5" parent="." unique_id=1457918397 instance=ExtResource("35_cnnru")]
 position = Vector2(98, 738)
+golden = false
 
 [node name="Crate6" parent="." unique_id=1493990971 instance=ExtResource("35_cnnru")]
 position = Vector2(234, 784)
+golden = false
 
 [node name="Crate7" parent="." unique_id=2060040359 instance=ExtResource("35_cnnru")]
 position = Vector2(344, 741)
+golden = false
 
 [node name="Crate8" parent="." unique_id=1389035487 instance=ExtResource("35_cnnru")]
 position = Vector2(456, 793)
+golden = false
 
 [node name="Crate9" parent="." unique_id=1597836642 instance=ExtResource("35_cnnru")]
 position = Vector2(584, 279)

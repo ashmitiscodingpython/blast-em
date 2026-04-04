@@ -22,6 +22,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ornx7")
 
 [node name="Crate UI" parent="." unique_id=846319715 instance=ExtResource("3_dfg3k")]
+visible = false
 position = Vector2(-0.38, -29.75)
 size = Vector2(12, -10)
 closed_position = Vector2(0, 0)
@@ -36,6 +37,7 @@ fade_when_closed = true
 crate = true
 
 [node name="Key Image" type="Sprite2D" parent="." unique_id=489210559]
+visible = false
 texture_filter = 1
 position = Vector2(5, -30)
 texture = ExtResource("4_juhn0")

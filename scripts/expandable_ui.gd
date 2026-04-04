@@ -26,6 +26,8 @@ extends Node2D
 @export var guns_confirm = false
 @export var guns_reroll = false
 @export var title = false
+@export var start = false
+@export var retry = false
 
 var mouse = false
 var player
@@ -47,7 +49,9 @@ func _ready() -> void:
 			text = "3  9 "
 			relative_position = Vector2(3.12, 0)
 			size = Vector2(34, -10)
-			$"../Key Image".position
+			var star_image = Sprite2D.new()
+			star_image.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0124.png")
+			$"..".add_child.call_deferred(star_image, true)
 	if name == "Gun Selection" or name == "Crate UI" or name == "Upgrade Menu":
 		visible = true
 		if name == "Crate UI":
@@ -75,7 +79,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	var cond = (closed_position.x - position.x < 1) and (closed_position.y - position.y < 1)
 	if button and crate:
-		if player.keys < 1:
+		if (player.keys < 1 and !$"..".golden) or ($"..".golden and player.keys < 3 and player.coins < 9):
 			disabled = true
 			modulate = Color(0.7, 0.7, 0.7, modulate.a)
 		else:
@@ -155,6 +159,9 @@ func _process(_delta: float) -> void:
 		$"Bottom Left".position = Vector2(-16 - (size.x / 2.0), 16 + (size.y / 2.0))
 		$"Top Right".position = Vector2(16 + (size.x / 2.0), -16 - (size.y / 2.0))
 		$"Top Left".position = Vector2(-16 - (size.x / 2.0), -16 - (size.y / 2.0))
+	if player and player.dead and !retry:
+		disabled = true
+		open = false
 
 func _mouse() -> void:
 	if !mouse:
@@ -170,12 +177,12 @@ func mouse_on() -> void:
 	if button:
 		if not mouse_whole and !title:
 			player.ui += 1
-		if !disabled:
+		if !disabled and open:
 			mouse_whole = true
 
 func mouse_off() -> void:
 	if button:
-		if (mouse_whole or disabled) and !title:
+		if (mouse_whole or disabled or !open) and !title:
 			player.ui -= 1
 		mouse_whole = false
 
@@ -225,14 +232,27 @@ func _input(event: InputEvent) -> void:
 					selection.ons[pos] = false
 			selection.update_cells()
 		if mouse_whole and button and crate:
-			$"../../CanvasLayer/Gun Selection".open = true
-			$"../../CanvasLayer/Gun Selection/Reroll".hidden_chosen = randi_range(0, 5)
-			$"../../CanvasLayer/Gun Selection/Reroll".rolls_left = 50
-			player.ui -= 1
-			var last_keys = player.keys
-			await (player.keys == last_keys - 1)
-			$"../Crate".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
-			$"..".wasted = true
+			if !$"..".golden:
+				$"../../CanvasLayer/Gun Selection".open = true
+				$"../../CanvasLayer/Gun Selection/Reroll".hidden_chosen = randi_range(0, 5)
+				$"../../CanvasLayer/Gun Selection/Reroll".rolls_left = 50
+				player.ui -= 1
+				var last_keys = player.keys
+				await (player.keys == last_keys - 1)
+				$"../Crate".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
+				$"..".wasted = true
+			else:
+				var winlose = $"../../CanvasLayer/Win _ Lose"
+				winlose.win__lose(true)
+				player.coins -= 9
+				player.keys -= 3
+				$"../../EnemySpawner".paused = true
+				$"../../EnemySpawner".enemy_pause = true
+				$"..".wasted = true
+				$"../Crate".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0219.png")
+				open = false
 		if mouse_whole and button and title:
 			$"..".to_pos = Vector2(0, -800)
 			$"..".switching = true
+		if mouse_whole and button and retry:
+			get_tree().change_scene_to_file("res://node_2d.tscn")

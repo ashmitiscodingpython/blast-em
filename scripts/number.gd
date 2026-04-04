@@ -30,7 +30,7 @@ var rnscale = 32
 var ghreps = 0
 var once = false
 var winlosereps = 0
-var winloseghreps = 0
+var winloseupreps = 0
 var winlosecursize = 0
 var winloseghostrn = 0
 
@@ -92,6 +92,8 @@ func write(text: String, coords: Vector2, align: String, scaled: float):
 		now.x += 16 * (scaled / 1.5)
 
 func _ready() -> void:
+	if win_lose:
+		once = true
 	if constant:
 		write(text_, text_position, align_, scale_)
 
@@ -146,20 +148,19 @@ func _process(_delta: float) -> void:
 					for child in get_children():
 						child.queue_free()
 					modulate = Color(1, 1, 1, 1)
-			if win_lose:
-				if winlosereps > 0:
-					winlosereps -= 1
-					write(text_, text_position, align_, winlosecursize)
-					winlosecursize += (4 - winlosecursize) / 5.0
-				if winlosereps == 0 and winloseghreps > 0:
-					winloseghreps -= 1
-					modulate = Color(1, 1, 1, winloseghostrn)
-					winloseghostrn += (0 - winloseghostrn) / 3.0
-				if ghreps == 0 and !once:
-					once = true
-					for child in get_children():
-						child.queue_free()
-					modulate = Color(1, 1, 1, 1)
+		if win_lose:
+			if winlosereps > 0:
+				winlosereps -= 1
+				write(text_, text_position, align_, winlosecursize)
+				winlosecursize += (4 - winlosecursize) / 5.0
+			if winlosereps == 0 and winloseupreps > 0:
+				winloseupreps -= 1
+				position.y += (262 - position.y) / 5
+			if winlosereps == 0 and winloseupreps == 0 and !once:
+				once = true
+				var but = $"../Retry Button"
+				but.open = true
+				print('oncing')
 
 func roundup():
 	repeats = 100
@@ -179,7 +180,7 @@ func round_en():
 func win__lose(win: bool):
 	once = false
 	winlosereps = 100
-	winloseghreps = 50
+	winloseupreps = 0 if win else 50
 	winlosecursize = 32
-	winloseghostrn = 1
+	win_lose = true
 	text_ = "YOU WON" if win else "YOU LOST"

@@ -51,7 +51,8 @@ func _on_timer_timeout() -> void:
 
 func on_move() -> void:
 	if type == "Slug":
-		move()
+		if !$"../EnemySpawner".enemy_pause:
+			move()
 	
 func _process(_delta: float) -> void:
 	if $"../EnemySpawner".disabled:
@@ -66,7 +67,8 @@ func _process(_delta: float) -> void:
 		if bar:
 			bar.global_position = global_position - Vector2(0, 5)
 		if type != "Slug":
-			move()
+			if !$"../EnemySpawner".enemy_pause:
+				move()
 	else:
 		match type:
 			"Slug": $Enemy.texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Enemies/Tiles/tile_0003.png")
