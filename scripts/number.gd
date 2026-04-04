@@ -12,6 +12,7 @@ extends Node2D
 @export var selection = false
 @export var keys = false
 @export var gun = false
+@export var win_lose = false
 
 @warning_ignore("unused_signal")
 signal round
@@ -28,6 +29,10 @@ var rounden = false
 var rnscale = 32
 var ghreps = 0
 var once = false
+var winlosereps = 0
+var winloseghreps = 0
+var winlosecursize = 0
+var winloseghostrn = 0
 
 const letters = "+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -141,6 +146,20 @@ func _process(_delta: float) -> void:
 					for child in get_children():
 						child.queue_free()
 					modulate = Color(1, 1, 1, 1)
+			if win_lose:
+				if winlosereps > 0:
+					winlosereps -= 1
+					write(text_, text_position, align_, winlosecursize)
+					winlosecursize += (4 - winlosecursize) / 5.0
+				if winlosereps == 0 and winloseghreps > 0:
+					winloseghreps -= 1
+					modulate = Color(1, 1, 1, winloseghostrn)
+					winloseghostrn += (0 - winloseghostrn) / 3.0
+				if ghreps == 0 and !once:
+					once = true
+					for child in get_children():
+						child.queue_free()
+					modulate = Color(1, 1, 1, 1)
 
 func roundup():
 	repeats = 100
@@ -156,3 +175,11 @@ func round_en():
 	roundengh = 1
 	rnscale = 32
 	rounden = true
+
+func win__lose(win: bool):
+	once = false
+	winlosereps = 100
+	winloseghreps = 50
+	winlosecursize = 32
+	winloseghostrn = 1
+	text_ = "YOU WON" if win else "YOU LOST"

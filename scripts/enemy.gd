@@ -54,6 +54,8 @@ func on_move() -> void:
 		move()
 	
 func _process(_delta: float) -> void:
+	if $"../EnemySpawner".disabled:
+		queue_free()
 	if bar:
 		bar.health = (float(health) / float(total_health)) * 100
 	if player_.position.x > position.x:

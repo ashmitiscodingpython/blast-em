@@ -42,6 +42,12 @@ func set_children_modulate():
 		child.modulate = modulate
 
 func _ready() -> void:
+	if crate:
+		if $"..".golden:
+			text = "3  9 "
+			relative_position = Vector2(3.12, 0)
+			size = Vector2(34, -10)
+			$"../Key Image".position
 	if name == "Gun Selection" or name == "Crate UI" or name == "Upgrade Menu":
 		visible = true
 		if name == "Crate UI":
@@ -225,7 +231,7 @@ func _input(event: InputEvent) -> void:
 			player.ui -= 1
 			var last_keys = player.keys
 			await (player.keys == last_keys - 1)
-			$"..".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
+			$"../Crate".texture = load("res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0217.png")
 			$"..".wasted = true
 		if mouse_whole and button and title:
 			$"..".to_pos = Vector2(0, -800)

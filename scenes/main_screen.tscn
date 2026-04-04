@@ -23,6 +23,14 @@ material = SubResource("ShaderMaterial_4takm")
 position = Vector2(576, 324)
 texture = ExtResource("2_il54y")
 
+[node name="Loading" type="Node2D" parent="." unique_id=573278635]
+position = Vector2(608.505, 324)
+script = ExtResource("2_kusfh")
+constant = true
+text_ = "Loading"
+align_ = "center"
+scale_ = 5.0
+
 [node name="Moveables" type="Node2D" parent="." unique_id=1489154593]
 script = ExtResource("3_il54y")
 
@@ -63,3 +71,11 @@ texture_filter = 1
 position = Vector2(-46.64, -0.055)
 scale = Vector2(1.625, 1.625)
 texture = ExtResource("5_w87pm")
+
+[node name="Kenney Special Credit" type="Node2D" parent="Moveables" unique_id=107384047]
+position = Vector2(597.795, 597.11)
+script = ExtResource("2_kusfh")
+constant = true
+text_ = "Special thanks to kenney for the art assets"
+align_ = "center"
+scale_ = 2.0
