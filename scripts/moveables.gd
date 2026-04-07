@@ -4,7 +4,7 @@ var to_pos = Vector2(0, 0)
 var switching = false
 
 func _ready() -> void:
-	pass
+	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0025.png"))
 
 func _process(_delta: float) -> void:
 	position += (to_pos - position) / 5

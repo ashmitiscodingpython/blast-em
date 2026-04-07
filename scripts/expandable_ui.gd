@@ -1,4 +1,5 @@
 extends Node2D
+class_name EUI
 
 @export var size = Vector2(0, 0)
 @export var closed_position = Vector2(576, 800)
@@ -38,6 +39,7 @@ var hidden_chosen
 var rolls_left = 0
 var cooldown = 0
 var disabled = false
+static var paused
 
 func set_children_modulate():
 	for child in get_children():
@@ -175,14 +177,14 @@ func _mouse_left() -> void:
 
 func mouse_on() -> void:
 	if button:
-		if not mouse_whole and !title:
+		if not mouse_whole and !title and !paused:
 			player.ui += 1
 		if !disabled and open:
 			mouse_whole = true
 
 func mouse_off() -> void:
 	if button:
-		if (mouse_whole or disabled or !open) and !title:
+		if (mouse_whole or disabled or !open) and !title and !paused:
 			player.ui -= 1
 		mouse_whole = false
 
@@ -219,7 +221,8 @@ func _input(event: InputEvent) -> void:
 			$"../Selection Visibilty Controller".visible = false
 			if $"../../EnemySpawner".paused:
 				$"../Cooldown Bar".visible = true
-				$"../../EnemySpawner".paused = false
+				if !$"../PlayPause".paused:
+					$"../../EnemySpawner".paused = false
 			player.ui -= 1
 			$"../Upgrade Menu/Upgrade Button".totalable = 0
 			visible = false

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://boybuworqg2cd"]
 
 [ext_resource type="Texture2D" uid="uid://ctqiwaeid2klk" path="res://kenney_desert-shooter-pack_1.0/PNG/Tiles/Tiles/tile_0222.png" id="1_vvkl3"]
-[ext_resource type="Script" uid="uid://d2jjrdufsyy1o" path="res://medkit.gd" id="2_g3m1j"]
+[ext_resource type="Script" uid="uid://d2jjrdufsyy1o" path="res://scripts/medkit.gd" id="2_g3m1j"]
 
 [node name="Medkit" type="Sprite2D" unique_id=1387257856]
 texture_filter = 1

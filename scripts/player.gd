@@ -113,7 +113,6 @@ func _ready() -> void:
 	full = (layers[0].tile_set.get_source(0) as TileSetAtlasSource).get_tile_data(Vector2i(1, 3), 0).get_collision_polygon_points(0, 0)
 	reset_collision()
 	turn_off_collision(z + 1)
-	Input.set_custom_mouse_cursor(preload("res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0025.png"))
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("Left", "Right", "Up", "Down")

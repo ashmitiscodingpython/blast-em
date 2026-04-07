@@ -27,12 +27,13 @@
 [ext_resource type="Script" uid="uid://8wupfp1ubx6m" path="res://scripts/highlight.gd" id="18_k73cj"]
 [ext_resource type="Shader" uid="uid://bt5b6nocv3emh" path="res://shaders/fog.gdshader" id="20_7vxoj"]
 [ext_resource type="Texture2D" uid="uid://dwwvx8lwf6hsr" path="res://images/new_noise_texture_2d.tres" id="21_ei405"]
-[ext_resource type="Script" uid="uid://x4x6dri0ejdb" path="res://fog.gd" id="22_e8dv2"]
+[ext_resource type="Script" uid="uid://x4x6dri0ejdb" path="res://scripts/fog.gd" id="22_e8dv2"]
 [ext_resource type="TileSet" uid="uid://dgmrt52oocod7" path="res://fog.tres" id="23_e8dv2"]
 [ext_resource type="Script" uid="uid://3shckdkrlmi4" path="res://scripts/selection_layer.gd" id="24_2nhjh"]
 [ext_resource type="Texture2D" uid="uid://bjodtkaeaemqt" path="res://kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0005.png" id="25_540hr"]
 [ext_resource type="Texture2D" uid="uid://cuiovru60agu0" path="res://kenney_desert-shooter-pack_1.0/PNG/Interface/Tiles/tile_0104.png" id="25_bjha6"]
 [ext_resource type="Script" uid="uid://bwdm0dbvjwcsl" path="res://scripts/gun_picture.gd" id="26_6ip5v"]
+[ext_resource type="Script" uid="uid://ciwu8sx6ww0ey" path="res://scripts/play_pause.gd" id="28_c4wnb"]
 [ext_resource type="Script" uid="uid://btef8lfpb8qr5" path="res://scripts/guns_info.gd" id="30_2u7jv"]
 [ext_resource type="PackedScene" uid="uid://chytvchqjk781" path="res://scenes/key.tscn" id="32_ornx7"]
 [ext_resource type="PackedScene" uid="uid://d1y8vm550jj7c" path="res://scenes/crate.tscn" id="35_cnnru"]
@@ -132,6 +133,118 @@ radial_velocity_min = 19.859978
 radial_velocity_max = 158.93997
 gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_7plk7")
+
+[sub_resource type="Animation" id="Animation_c4wnb"]
+resource_name = "Play"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CanvasLayer/PlayPause/Stroke 2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4, 0), Vector2(2.9999998, -3.9999995)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasLayer/PlayPause/Stroke 2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.86660755]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CanvasLayer/PlayPause/Stroke 3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4, 0), Vector2(2.9999998, 4)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/PlayPause/Stroke 3:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.9919189]
+}
+
+[sub_resource type="Animation" id="Animation_7plk7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CanvasLayer/PlayPause/Stroke 2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(122, 118)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CanvasLayer/PlayPause/Stroke 2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../CanvasLayer/PlayPause/Stroke 3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(122, 118)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CanvasLayer/PlayPause/Stroke 3:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.87959605]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbwgr"]
+_data = {
+&"Play": SubResource("Animation_c4wnb"),
+&"RESET": SubResource("Animation_7plk7")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7plk7"]
+size = Vector2(18.666643, 17.000002)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c4wnb"]
 shader = ExtResource("38_q5dlx")
@@ -342,9 +455,9 @@ visible = false
 
 [node name="Health Bar" parent="CanvasLayer/Cooldown Bar" unique_id=2085607430 instance=ExtResource("12_x0ka3")]
 texture_filter = 1
-position = Vector2(667, 60)
+position = Vector2(626, 60)
 scale = Vector2(2.805, 2.805)
-length = 18
+length = 17
 
 [node name="Text" type="Node2D" parent="CanvasLayer/Cooldown Bar" unique_id=1595715748]
 script = ExtResource("11_hqns4")
@@ -540,6 +653,32 @@ button_scale = 1.08
 fade_when_closed = true
 retry = true
 
+[node name="PlayPause" type="Area2D" parent="CanvasLayer" unique_id=884624616]
+position = Vector2(1103, 52)
+scale = Vector2(3, 3)
+script = ExtResource("28_c4wnb")
+
+[node name="Stroke 1" type="Sprite2D" parent="CanvasLayer/PlayPause" unique_id=1925417895]
+position = Vector2(-4, 0)
+texture = ExtResource("15_2u7jv")
+
+[node name="Stroke 2" type="Sprite2D" parent="CanvasLayer/PlayPause" unique_id=1035174441]
+z_index = -1
+position = Vector2(122, 118)
+texture = ExtResource("15_2u7jv")
+
+[node name="Stroke 3" type="Sprite2D" parent="CanvasLayer/PlayPause" unique_id=759401414]
+position = Vector2(122, 118)
+rotation = 0.87959605
+texture = ExtResource("15_2u7jv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/PlayPause" unique_id=1476642261]
+root_node = NodePath("../../../PlayNPause")
+libraries/ = SubResource("AnimationLibrary_fbwgr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/PlayPause" unique_id=1495901503]
+shape = SubResource("RectangleShape2D_7plk7")
+
 [node name="Damage Overlay" type="Sprite2D" parent="CanvasLayer" unique_id=1715006379]
 modulate = Color(0.80655646, 0.06100855, 0, 1)
 material = SubResource("ShaderMaterial_c4wnb")
@@ -557,9 +696,9 @@ script = ExtResource("22_e8dv2")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=721826323]
 offset_left = -576.0
-offset_top = -320.0
+offset_top = -318.0
 offset_right = 1728.0
-offset_bottom = 976.0
+offset_bottom = 978.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1969647580]
 disable_3d = true
@@ -631,6 +770,18 @@ position = Vector2(1436, 464)
 [node name="Key9" parent="Keys" unique_id=1965918795 instance=ExtResource("32_ornx7")]
 position = Vector2(1551, 347)
 
+[node name="Key10" parent="Keys" unique_id=1292682349 instance=ExtResource("32_ornx7")]
+position = Vector2(540, 855)
+
+[node name="Key11" parent="Keys" unique_id=2086493739 instance=ExtResource("32_ornx7")]
+position = Vector2(992, 719)
+
+[node name="Key12" parent="Keys" unique_id=1705860852 instance=ExtResource("32_ornx7")]
+position = Vector2(1112, 567)
+
+[node name="Key13" parent="Keys" unique_id=979535267 instance=ExtResource("32_ornx7")]
+position = Vector2(-224, 316)
+
 [node name="Medkits" type="Node2D" parent="." unique_id=957509715]
 
 [node name="Medkit3" parent="Medkits" unique_id=1387257856 instance=ExtResource("37_q5dlx")]
@@ -668,23 +819,29 @@ position = Vector2(-37, 540)
 golden = false
 
 [node name="Crate5" parent="." unique_id=1457918397 instance=ExtResource("35_cnnru")]
-position = Vector2(98, 738)
+position = Vector2(53, 719)
 golden = false
 
 [node name="Crate6" parent="." unique_id=1493990971 instance=ExtResource("35_cnnru")]
-position = Vector2(234, 784)
+position = Vector2(578, -25)
 golden = false
 
 [node name="Crate7" parent="." unique_id=2060040359 instance=ExtResource("35_cnnru")]
-position = Vector2(344, 741)
+position = Vector2(969, 416)
 golden = false
 
 [node name="Crate8" parent="." unique_id=1389035487 instance=ExtResource("35_cnnru")]
-position = Vector2(456, 793)
+position = Vector2(495, 850)
 golden = false
 
 [node name="Crate9" parent="." unique_id=1597836642 instance=ExtResource("35_cnnru")]
 position = Vector2(584, 279)
+
+[node name="Crate10" parent="." unique_id=1647112061 instance=ExtResource("35_cnnru")]
+position = Vector2(201, 430)
+
+[node name="PlayNPause" type="Node2D" parent="." unique_id=492864598]
+z_index = 1
 
 [connection signal="body_entered" from="Player/Area2D" to="Player" method="_area_entered"]
 [connection signal="body_exited" from="Player/Area2D" to="Player" method="_area_exited"]
@@ -696,3 +853,5 @@ position = Vector2(584, 279)
 [connection signal="mouse_entered" from="CanvasLayer/Upgrade Button" to="CanvasLayer/Upgrade Button" method="_mouse_on"]
 [connection signal="mouse_exited" from="CanvasLayer/Upgrade Button" to="CanvasLayer/Upgrade Button" method="_mouse_off"]
 [connection signal="timeout" from="CanvasLayer/Highlight/Timer" to="CanvasLayer/Highlight" method="callback"]
+[connection signal="mouse_entered" from="CanvasLayer/PlayPause" to="CanvasLayer/PlayPause" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/PlayPause" to="CanvasLayer/PlayPause" method="_on_mouse_exited"]

@@ -13,7 +13,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	time += _delta
 	var distance = sqrt(pow(position.x - player.position.x, 2) + pow(position.y - player.position.y, 2))
-	if distance < 48 and !wasted:
+	if distance < 48 and !wasted and ! $"Crate UI".paused:
 		$"Crate UI".open = true
 	else:
 		$"Crate UI".open = false
